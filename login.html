@@ -8,39 +8,47 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section>
-        <div class="img"></div>
-        <div class="upperContent">
-            <p> Let’s make the world productive, together.</p>
-        </div>
-        <div class="content">
-            <div class="form">
-                <h2>Welcome!</h2>
-                <form>
-                    <div class="input">
-                        <span> Username</span>
-                        <input type="text" name="">
-                    </div>
-                    <div class="input">
-                        <span> Email</span>
-                        <input type="text" name="">
-                    </div>
-                    <div class="input">
-                        <span> Password</span>
-                        <input type="password" name="">
-                    </div>
-                    <div class="remember">
-                        <label><input type="checkbox" name="">Remember me</label>
-                    </div>
-                    <div class="input">
-                        <input type="submit" value="Sign in" name="">
-                    </div>
-                    <div class="input">
-                        <p>Don't have an account?<a href="#">Sign up</a></p>
-                    </div>
-                </form>
+    <div class="signin_container">
+        <div class="signin_nav"> 
+            <div class="signin_logo">
+                teamup.
             </div>
         </div>
-    </section>
+        <div class="signin_body">
+            <div class="signin_contents">
+                <div class="signin_paragraph">
+                    Let’s make the world productive, together.
+                </div>
+                <div class="signin_image">
+                    <img class="img" src="signin_image.svg" >
+                </div>
+            </div>
+            <div class="signin_form">
+                <div class="signin_form_items">
+                    <div class="signin_form_header"> Welcome!</div>
+                    <form class="signin_input">
+                        <div class="signin_form_input">
+                            <div class="label"> Username</div>
+                            <input class="input" type="text" name="">
+                        </div>
+                        <div class="signin_form_input">
+                            <div class="label"> Email</div>
+                            <input class="input" type="text" name="">
+                        </div>
+                        <div class="signin_form_input">
+                            <div class="label"> Password</div>
+                            <input class="input" type="password" name="">
+                        </div>
+                        <div class="signin_form_input">
+                            <button class="signin_button" type="submit" > Sign In</button>
+                        </div>
+                        <div class="signin_form_input">
+                            <div class="signin_switch_paragraph">Don't have an account?<a href="#">Sign up</a> </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
