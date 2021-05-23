@@ -1,6 +1,7 @@
 import React from "react";
-import "./Signin.css";
-import image from "./signin_image.svg";
+import "../Signup/Signin.css";
+import image from "../Signup/signin_image.svg";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
   return (
@@ -22,10 +23,6 @@ const Signin = () => {
           <form className="signin__form">
             <div className="signin__header">Welcome!</div>
             <div className="signin__inputdiv">
-              <div className="signin__label">Username</div>
-              <input className="signin__input" type="text" />
-            </div>
-            <div className="signin__inputdiv">
               <div className="signin__label">Email</div>
               <input className="signin__input" type="text" />
             </div>
@@ -38,7 +35,9 @@ const Signin = () => {
             </div>
             <div className="signin__switchState">
               <div>Don't have an account?</div>
-              <div className="signin__orange">Sign In</div>
+              <Link to="/signup" className="signin__orange">
+                Sign Up
+              </Link>
             </div>
           </form>
         </div>

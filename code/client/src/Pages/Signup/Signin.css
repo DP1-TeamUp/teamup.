@@ -124,4 +124,5 @@
 .signin__orange {
   color: #ff8c42;
   padding-left: 1vh;
+  cursor: pointer;
 }
