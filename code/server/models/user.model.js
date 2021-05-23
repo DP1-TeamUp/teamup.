@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
     required: 'Password is required',
   },
   salt: String,
+  projects: [],
 });
 
 UserSchema.virtual('password')

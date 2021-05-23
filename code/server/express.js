@@ -7,6 +7,7 @@ const helmet = require('helmet');
 
 const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
+const projectRoutes = require('./routes/project.routes');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors());
 //routes
 app.use('/', userRoutes);
 app.use('/', authRoutes);
+app.use('/', projectRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);

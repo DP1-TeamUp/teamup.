@@ -89,4 +89,11 @@ const remove = async (req, res, next) => {
   }
 };
 
-module.exports = { create, userByID, list, read, remove, update };
+module.exports = {
+  create,
+  userByID,
+  list,
+  read,
+  remove,
+  update,
+};
