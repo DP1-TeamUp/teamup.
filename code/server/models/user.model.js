@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     required: 'Password is required',
   },
   salt: String,
-  projects: [],
+  projects: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Project' }],
 });
 
 UserSchema.virtual('password')

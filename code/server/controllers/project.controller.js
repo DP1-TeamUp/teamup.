@@ -86,4 +86,8 @@ const selectProjectById = async (req, res) => {
   res.status(200).json({ success: true, project });
 };
 
-module.exports = { create, findProjectsByUserId, selectProjectById };
+module.exports = {
+  create,
+  findProjectsByUserId,
+  selectProjectById,
+};
