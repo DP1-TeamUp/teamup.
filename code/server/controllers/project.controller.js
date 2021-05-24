@@ -174,10 +174,66 @@ const listOfAllMembersByProjectId = async (req, res) => {
   res.status(200).json({ success: true, members: project.members });
 };
 
+const removeMemberFromProject = async (req, res) => {
+  const projectId = req.params.projectId;
+
+  let project;
+  try {
+    project = await Project.findById(projectId);
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: 'Project not found' });
+  }
+
+  if (!project) {
+    return res
+      .status(404)
+      .json({ success: false, message: 'Project not found' });
+  }
+
+  if (project.admin === req.body.memberId) {
+    return res
+      .status(404)
+      .json({ success: false, message: 'Admin cannot be removed' });
+  }
+
+  let user;
+  try {
+    user = await User.findById(req.body.memberId);
+  } catch (error) {
+    return res
+      .status(504)
+      .json({ success: false, message: 'Error Retriving User' });
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    project.members.pull(req.body.memberId);
+    await project.save({ session: sess });
+    user.projects.pull(project);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
+    res.status(201).json({
+      success: true,
+      message: 'Member Deleted',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+};
+
 module.exports = {
   create,
   findProjectsByUserId,
   selectProjectById,
   addMemberToProject,
   listOfAllMembersByProjectId,
+  removeMemberFromProject,
 };

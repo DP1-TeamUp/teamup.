@@ -16,6 +16,7 @@ router
 router
   .route('/api/projects/members/:projectId')
   .put(projectController.addMemberToProject)
-  .get(projectController.listOfAllMembersByProjectId);
+  .get(projectController.listOfAllMembersByProjectId)
+  .delete(projectController.removeMemberFromProject);
 
 module.exports = router;
