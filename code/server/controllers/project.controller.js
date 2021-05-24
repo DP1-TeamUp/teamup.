@@ -107,10 +107,10 @@ const addMemberToProject = async (req, res) => {
       .status(404)
       .json({ success: false, message: 'No project found' });
   }
+  console.log(project);
 
-  let user;
   try {
-    user = await User.findById(req.body.memberId);
+    user = await User.find({ email: req.body.email });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -128,10 +128,10 @@ const addMemberToProject = async (req, res) => {
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
-    project.members.push(req.body.memberId);
+    project.members.push(user[0]._id);
     await project.save({ session: sess });
-    user.projects.push(project);
-    await user.save({ session: sess });
+    user[0].projects.push(project);
+    await user[0].save({ session: sess });
     await sess.commitTransaction();
     res.status(201).json({
       success: true,
@@ -139,7 +139,7 @@ const addMemberToProject = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    return res.status(501).json({
       success: false,
       message: 'Something went wrong please try again',
     });
@@ -206,6 +206,12 @@ const removeMemberFromProject = async (req, res) => {
     return res
       .status(504)
       .json({ success: false, message: 'Error Retriving User' });
+  }
+
+  if (!user) {
+    return res
+      .status(404)
+      .json({ success: false, message: 'User do not exist' });
   }
 
   try {
