@@ -110,7 +110,7 @@ const addMemberToProject = async (req, res) => {
   console.log(project);
 
   try {
-    user = await User.find({ email: req.body.email });
+    user = await User.findOne({ email: req.body.email });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -128,10 +128,10 @@ const addMemberToProject = async (req, res) => {
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
-    project.members.push(user[0]._id);
+    project.members.push(user._id);
     await project.save({ session: sess });
-    user[0].projects.push(project);
-    await user[0].save({ session: sess });
+    user.projects.push(project);
+    await user.save({ session: sess });
     await sess.commitTransaction();
     res.status(201).json({
       success: true,
