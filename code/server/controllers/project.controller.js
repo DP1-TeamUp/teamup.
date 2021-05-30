@@ -38,6 +38,7 @@ const create = async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'New Project Created',
+      project: project,
     });
   } catch (error) {
     console.log(error);
@@ -53,7 +54,7 @@ const findProjectsByUserId = async (req, res) => {
   let projects;
   let user;
   try {
-    user = await User.findById(userId);
+    user = await User.findById(userId).populate('projects', 'name');
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -67,6 +68,7 @@ const findProjectsByUserId = async (req, res) => {
       message: 'No projects for this user',
     });
   }
+
   projects = user.projects;
   res.status(200).json({ success: true, projects });
 };

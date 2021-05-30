@@ -3,6 +3,11 @@ const extend = require('lodash/extend');
 
 const create = async (req, res, next) => {
   const user = new User(req.body);
+  if (!req.body.password || !req.body.name || !req.body.email) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Please fill in your form' });
+  }
   if (req.body.password.length < 6) {
     return res.status(404).json({
       success: false,
@@ -16,6 +21,11 @@ const create = async (req, res, next) => {
       .json({ success: true, message: 'Successfully signed up' });
   } catch (err) {
     console.log(err);
+    if (err.code === 11000) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Email already in use' });
+    }
     return res
       .status(400)
       .json({ success: false, message: 'Unable to create an user' });
