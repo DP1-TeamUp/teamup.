@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
 const projectRoutes = require('./routes/project.routes');
+const boardRoutes = require('./routes/board.routes');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use('/', userRoutes);
 app.use('/', authRoutes);
 app.use('/', projectRoutes);
+app.use('/', boardRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);

@@ -158,7 +158,7 @@ const listOfAllMembersByProjectId = async (req, res) => {
     console.log(error);
     res.status(500).json({
       success: false,
-      message: 'Something went wrong finding the project',
+      message: 'Something went wrong finding the members for this project',
     });
   }
 
