@@ -49,7 +49,7 @@ const Project = () => {
         />
       )}
 
-      <div className="project__navbar">
+      <div className="project__navbar"> 
         <div className="project__logo">teamup.</div>
         <div className="project__accountInfo">
           <Avatar className={classes.purple}>
