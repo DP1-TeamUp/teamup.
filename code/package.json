@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "nodemon server/server.js"
+    "backend": "nodemon server/server.js",
+    "backend2": "nodemon backend/server2.js",
+    "backend3": "nodemon backend/server3.js"
   },
   "author": "Ibtid",
   "license": "ISC",

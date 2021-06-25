@@ -13,6 +13,7 @@ const TaskSchema = new mongoose.Schema({
   points: { type: Number },
   comments: [],
   assignedTo: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+  projectId: { type: mongoose.Types.ObjectId, required: true, ref: 'Project' },
   status: { type: String, trim: true },
 });
 

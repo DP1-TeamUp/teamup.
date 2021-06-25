@@ -2,20 +2,22 @@ const express = require('express');
 const app = express();
 
 const http = require('http');
-const server = htpp.createServer(app);
+const server = http.createServer(app);
 
 //pass socket.io in the created server
 const io = require('socket.io')(server, {
   cors: {
-    origin: 'https://localhost:3000',
-    method: ['GET', 'POST'],
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
   },
 });
 
 io.on('connection', onConnection);
 
 function onConnection(socket) {
-  socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+  socket.on('drawing', (data) => {
+    socket.broadcast.emit('drawing', data);
+  });
 }
 
 const port = 4000;
