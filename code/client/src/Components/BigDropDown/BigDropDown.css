@@ -1,0 +1,16 @@
+.bigDropDown {
+  width: 25vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f2f2f2;
+  font-size: 1.2vw;
+  height: 4.5vh;
+  background-color: #252525;
+  border-radius: 1.5vh;
+  padding-top: 0.4vh;
+  padding-bottom: 0.4vh;
+  margin-right: 2vw;
+  cursor: pointer;
+  font-family: "Montserrat";
+}
