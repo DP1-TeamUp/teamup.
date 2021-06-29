@@ -1,0 +1,17 @@
+.reports {
+  height: 86vh;
+  width: 85vw;
+  background: #121212;
+  padding-left: 2vw;
+  padding-top: 4vh;
+}
+
+.reports__navbar {
+  margin-bottom: 3vh;
+}
+
+.reports__content {
+  background-color: white;
+  height: 71vh;
+  width: 81vw;
+}
