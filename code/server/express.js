@@ -19,6 +19,7 @@ app.use(cookieParser());
 app.use(compress());
 app.use(helmet());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use('/uploads', express.static('uploads'));
 
 //routes
 app.use('/', userRoutes);

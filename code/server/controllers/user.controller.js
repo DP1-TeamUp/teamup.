@@ -67,7 +67,9 @@ const read = (req, res) => {
 const update = async (req, res, next) => {
   try {
     let user = req.profile;
-    user = extend(user, req.body);
+    console.log(req.file.path);
+    //user = extend(user, req.body);
+    user.image = req.file.path;
     user.updated = Date.now();
     await user.save();
     user.hashed_password = undefined;

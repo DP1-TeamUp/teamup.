@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema({
   },
   salt: String,
   projects: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Project' }],
+  image: { type: String },
 });
 
 UserSchema.virtual('password')

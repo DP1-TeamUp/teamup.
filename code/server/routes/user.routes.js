@@ -1,6 +1,7 @@
 const express = require('express');
 const userControl = require('../controllers/user.controller');
 const authControl = require('../controllers/auth.controller');
+const fileUpload = require('../middlewares/file-upload');
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router
   .put(
     authControl.requireSignin,
     authControl.hasAuthorization,
+    fileUpload.single('image'),
     userControl.update
   )
   .delete(
