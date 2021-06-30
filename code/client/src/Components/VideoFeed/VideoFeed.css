@@ -1,0 +1,20 @@
+.videoFeed {
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.videoFeed__streams {
+  width: 100%;
+  height: 90%;
+}
+
+.videoFeed__buttons {
+  background-color: #121212;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
