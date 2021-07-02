@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
 const projectRoutes = require('./routes/project.routes');
 const boardRoutes = require('./routes/board.routes');
+const taskRoutes = require('./routes/task.routes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/', userRoutes);
 app.use('/', authRoutes);
 app.use('/', projectRoutes);
 app.use('/', boardRoutes);
+app.use('/', taskRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);
