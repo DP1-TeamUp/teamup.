@@ -2,6 +2,7 @@ const Task = require('../models/task.model');
 const User = require('../models/user.model');
 const Project = require('../models/project.model');
 const ObjectId = require('mongodb').ObjectID;
+const transporter = require('../helper/nodemailer');
 
 const create = async (req, res) => {
   let task = new Task(req.body);
@@ -56,27 +57,37 @@ const create = async (req, res) => {
       message: 'Related Project does not exist',
     });
   }
-  if (!user) {
-    return res.status(500).json({
-      success: false,
-      message: 'Assigned user does not exist',
-    });
-  }
+
+  const mailOptions = {
+    from: 'teamupp89@gmail.com',
+    to: user.email,
+    subject: 'New Task on ' + project.name,
+    text: req.body.story,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 
   try {
     task.image = user.image;
     await task.save();
   } catch (error) {
     console.log(error);
-
     return res.status(500).json({
       success: false,
       message: 'Something went wrong please try again',
     });
   }
+
   return res.status(201).json({
     success: true,
     message: 'Story Added successfully',
+    task,
   });
 };
 

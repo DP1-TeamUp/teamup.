@@ -17,6 +17,7 @@ const create = async (req, res) => {
       message: 'Something went wrong please try again',
     });
   }
+  console.log(board);
   res
     .status(201)
     .json({ success: true, message: 'Successfully created board', board });
