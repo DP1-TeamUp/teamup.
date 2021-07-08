@@ -12,12 +12,12 @@ const create = async (req, res) => {
   try {
     await board.save();
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: 'Something went wrong please try again',
     });
   }
-  console.log(board);
   res
     .status(201)
     .json({ success: true, message: 'Successfully created board', board });

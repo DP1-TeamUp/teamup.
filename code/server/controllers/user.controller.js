@@ -1,9 +1,13 @@
 const User = require('../models/user.model');
-const extend = require('lodash/extend');
 
 const create = async (req, res, next) => {
   const user = new User(req.body);
-  if (!req.body.password || !req.body.name || !req.body.email) {
+  if (
+    !req.body.password ||
+    !req.body.name ||
+    !req.body.email ||
+    !req.body.username
+  ) {
     return res
       .status(400)
       .json({ success: false, message: 'Please fill in your form' });
@@ -65,6 +69,7 @@ const read = (req, res) => {
   return res.json({ success: true, profile: req.profile });
 };
 const update = async (req, res, next) => {
+  console.log(req.profile._id);
   try {
     let user = req.profile;
     console.log(req.file.path);

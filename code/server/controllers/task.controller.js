@@ -74,7 +74,6 @@ const create = async (req, res) => {
   });
 
   try {
-    task.image = user.image;
     await task.save();
   } catch (error) {
     console.log(error);
@@ -95,7 +94,10 @@ const listAllTasksByProjectId = async (req, res) => {
   const projectId = req.params.projectId;
   let tasks;
   try {
-    tasks = await Task.find({ projectId: ObjectId(projectId) });
+    tasks = await Task.find({ projectId: ObjectId(projectId) }).populate(
+      'assignedTo',
+      'image'
+    );
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -110,4 +112,23 @@ const listAllTasksByProjectId = async (req, res) => {
   });
 };
 
-module.exports = { create, listAllTasksByProjectId };
+const listMyTasks = async (req, res) => {
+  userId = req.params.userId;
+  let tasks;
+  try {
+    tasks = await Task.find({ assignedTo: ObjectId(userId) });
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong getting tasks',
+    });
+  }
+  return res.status(201).json({
+    success: true,
+    message: 'Story retrieved',
+    tasks,
+  });
+};
+
+module.exports = { create, listAllTasksByProjectId, listMyTasks };

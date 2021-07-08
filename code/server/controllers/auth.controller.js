@@ -26,6 +26,7 @@ const signin = async (req, res) => {
         name: user.name,
         email: user.email,
         image: user.image,
+        username: user.username,
       },
     });
   } catch (err) {
