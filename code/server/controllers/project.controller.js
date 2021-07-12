@@ -97,6 +97,12 @@ const selectProjectById = async (req, res) => {
 const addMemberToProject = async (req, res) => {
   const projectId = req.params.projectId;
 
+  if (!req.body.email) {
+    res
+      .status(401)
+      .json({ success: false, message: 'Email need to be provided' });
+  }
+
   let project;
   try {
     project = await Project.findById(projectId);
@@ -109,7 +115,6 @@ const addMemberToProject = async (req, res) => {
       .status(404)
       .json({ success: false, message: 'No project found' });
   }
-  console.log(project);
 
   try {
     user = await User.findOne({ email: req.body.email });
@@ -122,9 +127,10 @@ const addMemberToProject = async (req, res) => {
   }
 
   if (!user) {
-    return res
-      .status(404)
-      .json({ success: false, message: 'Cannot find match to the userId' });
+    return res.status(404).json({
+      success: false,
+      message: 'No user found with the provided e-mail',
+    });
   }
 
   try {
@@ -153,7 +159,9 @@ const listOfAllMembersByProjectId = async (req, res) => {
   let project;
 
   try {
-    project = await Project.findById(projectId).populate('members');
+    project = await Project.findById(projectId)
+      .populate('members')
+      .populate('admin');
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -173,7 +181,12 @@ const listOfAllMembersByProjectId = async (req, res) => {
     x.salt = undefined;
   });
 
-  res.status(200).json({ success: true, members: project.members });
+  project.admin.hashed_password = undefined;
+  project.admin.salt = undefined;
+
+  res
+    .status(200)
+    .json({ success: true, members: project.members, admin: project.admin });
 };
 
 const removeMemberFromProject = async (req, res) => {
