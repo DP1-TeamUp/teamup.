@@ -27,6 +27,8 @@ const UserSchema = new mongoose.Schema({
   salt: String,
   projects: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Project' }],
   image: { type: String },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 });
 
 UserSchema.virtual('password')
@@ -66,6 +68,18 @@ UserSchema.methods = {
   },
   makeSalt: function () {
     return Math.round(new Date().valueOf() * Math.random()) + '';
+  },
+  getPasswordResetToken: function () {
+    const resetToken = crypto.randomBytes(4).toString('hex');
+
+    // setting a field in user model
+    this.resetPasswordToken = crypto
+      .createHash('sha1')
+      .update(resetToken)
+      .digest('hex');
+    this.resetPasswordExpire = Date.now() + 100 * (60 * 1000);
+
+    return resetToken;
   },
 };
 

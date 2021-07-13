@@ -21,6 +21,8 @@ router
     authControl.hasAuthorization,
     userControl.remove
   );
+router.post('/forget-password', userControl.forgetPassword);
+router.put('/reset-password/:resetToken', userControl.resetPassword);
 
 router.param('userId', userControl.userByID);
 
