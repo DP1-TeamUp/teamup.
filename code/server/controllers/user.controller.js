@@ -157,6 +157,12 @@ const forgetPassword = async (req, res) => {
 };
 
 const resetPassword = async (req, res) => {
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.status(400).json({
+      success: false,
+      message: 'Match your password again with confirm password',
+    });
+  }
   try {
     const resetPasswordToken = crypto
       .createHash('sha1')

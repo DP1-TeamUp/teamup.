@@ -186,7 +186,12 @@ const listOfAllMembersByProjectId = async (req, res) => {
 
   res
     .status(200)
-    .json({ success: true, members: project.members, admin: project.admin });
+    .json({
+      success: true,
+      members: project.members,
+      admin: project.admin,
+      description: project.description,
+    });
 };
 
 const removeMemberFromProject = async (req, res) => {

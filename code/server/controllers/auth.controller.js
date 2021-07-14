@@ -13,7 +13,10 @@ const signin = async (req, res) => {
     if (!user.authenticate(req.body.password)) {
       return res
         .status(401)
-        .send({ success: false, message: "Email and password don't match" });
+        .send({
+          success: false,
+          message: 'Incorrect Password. Please try again.',
+        });
     }
 
     const token = jwt.sign({ _id: user._id }, config.jwtSecret);
