@@ -184,14 +184,12 @@ const listOfAllMembersByProjectId = async (req, res) => {
   project.admin.hashed_password = undefined;
   project.admin.salt = undefined;
 
-  res
-    .status(200)
-    .json({
-      success: true,
-      members: project.members,
-      admin: project.admin,
-      description: project.description,
-    });
+  res.status(200).json({
+    success: true,
+    members: project.members,
+    admin: project.admin,
+    description: project.description,
+  });
 };
 
 const removeMemberFromProject = async (req, res) => {
@@ -255,6 +253,30 @@ const removeMemberFromProject = async (req, res) => {
   }
 };
 
+const listSprintsByProjectId = async (req, res) => {
+  const projectId = req.params.projectId;
+  let project;
+  try {
+    project = await Project.findById(projectId).populate('sprints');
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+  if (!project) {
+    return res.status(400).json({
+      success: false,
+      message: 'Something is wrong with your project',
+    });
+  }
+  return res.status(500).json({
+    success: true,
+    sprints: project.sprints,
+  });
+};
+
 module.exports = {
   create,
   findProjectsByUserId,
@@ -262,4 +284,5 @@ module.exports = {
   addMemberToProject,
   listOfAllMembersByProjectId,
   removeMemberFromProject,
+  listSprintsByProjectId,
 };

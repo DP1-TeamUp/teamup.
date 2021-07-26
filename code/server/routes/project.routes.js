@@ -19,4 +19,8 @@ router
   .get(projectController.listOfAllMembersByProjectId)
   .delete(projectController.removeMemberFromProject);
 
+router
+  .route('/api/projects/sprints/:projectId')
+  .get(projectController.listSprintsByProjectId);
+
 module.exports = router;

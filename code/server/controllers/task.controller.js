@@ -131,4 +131,29 @@ const listMyTasks = async (req, res) => {
   });
 };
 
-module.exports = { create, listAllTasksByProjectId, listMyTasks };
+const updateTask = async (req, res) => {
+  const taskId = req.params.taskId;
+
+  let sprint;
+  try {
+    sprint = await Sprint.findById(req.body.sprintId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the sprint Id please try again',
+    });
+  }
+
+  if (!sprint) {
+    return res.status(400).json({
+      success: false,
+      message: 'No such sprint exits in out database',
+    });
+  }
+
+  try {
+  } catch (error) {}
+};
+
+module.exports = { create, listAllTasksByProjectId, listMyTasks, updateTask };
