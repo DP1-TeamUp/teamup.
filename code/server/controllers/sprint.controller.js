@@ -94,6 +94,7 @@ const create = async (req, res) => {
   }
 
   let sprint = new Sprint(req.body);
+  sprint.velocity = 0;
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -114,4 +115,70 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { create };
+const getSprints = async (req, res) => {
+  if (!req.params.projectId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Project ID is required',
+    });
+  }
+
+  let project;
+  try {
+    project = await Project.findById(req.params.projectId);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Error while matching projectId',
+    });
+  }
+
+  if (!project) {
+    return res.status(400).json({
+      success: false,
+      message: 'Project does not exist',
+    });
+  }
+
+  let sprints;
+  try {
+    sprints = await Sprint.find({ projectId: ObjectId(req.params.projectId) });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error retrieving sprints',
+    });
+  }
+  return res.status(200).json({
+    success: true,
+    message: 'Successfully retrieved sprints',
+    sprints,
+  });
+};
+
+const getTaskBySprintId = async (req, res) => {
+  const sprintId = req.params.sprintId;
+
+  let sprint;
+  try {
+    sprint = await Sprint.findById(sprintId)
+      .populate({ path: 'pending', populate: { path: 'assignedTo' } })
+      .populate({ path: 'ongoing', populate: { path: 'assignedTo' } })
+      .populate({ path: 'completed', populate: { path: 'assignedTo' } });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error retrieving sprints',
+    });
+  }
+
+  return res.status(500).json({
+    success: true,
+    message: 'Retrievied sprint Info',
+    sprint,
+  });
+};
+
+module.exports = { create, getSprints, getTaskBySprintId };

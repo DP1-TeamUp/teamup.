@@ -1,8 +1,10 @@
 const Task = require('../models/task.model');
 const User = require('../models/user.model');
+const Sprint = require('../models/sprint.model');
 const Project = require('../models/project.model');
 const ObjectId = require('mongodb').ObjectID;
 const transporter = require('../helper/nodemailer');
+const mongoose = require('mongoose');
 
 const create = async (req, res) => {
   let task = new Task(req.body);
@@ -131,7 +133,7 @@ const listMyTasks = async (req, res) => {
   });
 };
 
-const updateTask = async (req, res) => {
+const updateTaskFromEpic = async (req, res) => {
   const taskId = req.params.taskId;
 
   let sprint;
@@ -145,15 +147,51 @@ const updateTask = async (req, res) => {
     });
   }
 
-  if (!sprint) {
-    return res.status(400).json({
+  let task;
+  try {
+    task = await Task.findById(taskId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
       success: false,
-      message: 'No such sprint exits in out database',
+      message: 'Something went wrong with the task Id please try again',
     });
   }
 
+  if (sprint) {
+    task.status = 'planned';
+    task.sprintId = req.body.sprintId;
+  }
+  task.assignedTo = req.body.assignedTo;
+  task.story = req.body.story;
+  task.points = req.body.points;
+
   try {
-  } catch (error) {}
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+
+    await task.save({ session: sess });
+    sprint.pending.push(taskId);
+    sprint.velocity = sprint.velocity + task.points;
+    await sprint.save({ session: sess });
+    await sess.commitTransaction();
+
+    return res.status(500).json({
+      success: true,
+      message: 'Updated',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the task Id please try again',
+    });
+  }
 };
 
-module.exports = { create, listAllTasksByProjectId, listMyTasks, updateTask };
+module.exports = {
+  create,
+  listAllTasksByProjectId,
+  listMyTasks,
+  updateTaskFromEpic,
+};

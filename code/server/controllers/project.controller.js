@@ -133,6 +133,27 @@ const addMemberToProject = async (req, res) => {
     });
   }
 
+  let existingMember;
+  try {
+    existingMember = await Project.findOne({
+      members: { $in: user._id },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(501).json({
+      success: false,
+      message:
+        'Something went wrong in finding existing member please try again',
+    });
+  }
+
+  if (existingMember) {
+    return res.status(501).json({
+      success: false,
+      message: 'Member is present in the project',
+    });
+  }
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();

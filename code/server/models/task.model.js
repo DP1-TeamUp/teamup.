@@ -15,7 +15,7 @@ const TaskSchema = new mongoose.Schema({
   assignedTo: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
   projectId: { type: mongoose.Types.ObjectId, required: true, ref: 'Project' },
   status: { type: String, trim: true },
-  sprintId: { type: mongoose.Types.ObjectId, required: true, ref: 'Sprint' },
+  sprintId: { type: mongoose.Types.ObjectId, ref: 'Sprint' },
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
