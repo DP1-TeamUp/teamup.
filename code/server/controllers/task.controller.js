@@ -189,9 +189,89 @@ const updateTaskFromEpic = async (req, res) => {
   }
 };
 
+const updateTaskFromKanban = async (req, res) => {
+  taskId = req.params.taskId;
+
+  let task;
+  try {
+    task = await Task.findById(taskId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the task Id please try again',
+    });
+  }
+
+  if (!task) {
+    return res.status(500).json({
+      success: false,
+      message: 'Task does not exist in the database',
+    });
+  }
+
+  let sprint;
+  try {
+    sprint = await Sprint.findById(req.body.sprintId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the sprint Id please try again',
+    });
+  }
+
+  if (!sprint) {
+    return res.status(500).json({
+      success: false,
+      message: 'Assigned Sprint doesnot existin the database',
+    });
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+
+    if (req.body.destName === 'Pending') {
+      task.status = 'pending';
+      sprint.pending.push(taskId);
+    } else if (req.body.destName === 'Ongoing') {
+      task.status = 'ongoing';
+      sprint.ongoing.push(taskId);
+    } else if (req.body.destName === 'Completed') {
+      task.status = 'completed';
+      sprint.completed.push(taskId);
+    }
+
+    if (req.body.sourceName === 'Pending') {
+      sprint.pending.pull(taskId);
+    } else if (req.body.sourceName === 'Ongoing') {
+      sprint.ongoing.pull(taskId);
+    } else if (req.body.sourceName === 'Completed') {
+      sprint.completed.pull(taskId);
+    }
+
+    await task.save({ session: sess });
+    await sprint.save({ session: sess });
+    await sess.commitTransaction();
+
+    return res.status(500).json({
+      success: true,
+      message: 'Updated',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the updating please try again',
+    });
+  }
+};
+
 module.exports = {
   create,
   listAllTasksByProjectId,
   listMyTasks,
   updateTaskFromEpic,
+  updateTaskFromKanban,
 };
