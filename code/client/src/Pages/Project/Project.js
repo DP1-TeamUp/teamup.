@@ -1,34 +1,40 @@
-import React, { useState } from "react";
-import { Avatar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { deepPurple } from "@material-ui/core/colors";
-import "./Project.css";
-import DropDown from "../../Components/DropDown/DropDown";
-import NewProject from "../../Modals/NewProject/NewProject";
-import ResponseModal from "../../Modals/ResponseModal/ResponseModal";
-import Spinkit from "../../Modals/Spinkit/Spinkit";
+import React, { useState } from 'react';
+import { Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import './Project.css';
+import DropDown from '../../Components/DropDown/DropDown';
+import NewProject from '../../Modals/NewProject/NewProject';
+import ResponseModal from '../../Modals/ResponseModal/ResponseModal';
+import Spinkit from '../../Modals/Spinkit/Spinkit';
+import Profile from '../../Modals/Profile/Profile';
 
 const useStyles = makeStyles((theme) => ({
   purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
     width: theme.spacing(4),
     height: theme.spacing(4),
-    fontSize: "3vh",
   },
 }));
 
 const Project = () => {
   const classes = useStyles();
-  const user = JSON.parse(sessionStorage.getItem("jwt"));
+  const user = JSON.parse(sessionStorage.getItem('jwt'));
   const [openForm, setOpenForm] = useState(false);
   const [openResponse, setOpenResponse] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [loadinga, setLoadinga] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   return (
-    <div className="project">
+    <div className='project'>
       {loadinga && <Spinkit />}
+      {openProfile && (
+        <Profile
+          openProfile={openProfile}
+          closeProfile={() => {
+            setOpenProfile(!setOpenProfile);
+          }}
+        />
+      )}
       {openForm && (
         <NewProject
           close={() => {
@@ -49,31 +55,38 @@ const Project = () => {
         />
       )}
 
-      <div className="project__navbar"> 
-        <div className="project__logo">teamup.</div>
-        <div className="project__accountInfo">
-          <Avatar className={classes.purple}>
-            {user ? user.user.name[0] : "N"}
-          </Avatar>
-          <div className="project__name">{user ? user.user.name : "Nafiz"}</div>
+      <div className='project__navbar'>
+        <div className='project__logo'>teamup.</div>
+        <div
+          className='project__accountInfo'
+          onClick={() => {
+            setOpenProfile(true);
+          }}>
+          <Avatar
+            className={classes.purple}
+            src={`http://localhost:5000/${user.user.image}`}
+          />
+
+          <div className='project__name'>
+            {user ? user.user.username : 'Nafiz'}
+          </div>
         </div>
       </div>
-      <div className="project__content">
-        <div className="project__contentText">
+      <div className='project__content'>
+        <div className='project__contentText'>
           <div>Create projects or collaborate</div>
           <div>with your team</div>
         </div>
-        <div className="project__buttondiv">
-          <div className="project__buttondrop">
+        <div className='project__buttondiv'>
+          <div className='project__buttondrop'>
             <DropDown />
           </div>
-          <div className="project__smallText">Or</div>
+          <div className='project__smallText'>Or</div>
           <button
-            className="project__button"
+            className='project__button'
             onClick={() => {
               setOpenForm(true);
-            }}
-          >
+            }}>
             Create Project
           </button>
         </div>

@@ -11,6 +11,7 @@ import VideoStreamPreview from '../VideoStreamPreview/VideoStreamPreview';
 import styled from 'styled-components';
 import Peer from 'simple-peer';
 import io from 'socket.io-client';
+import { useStateValue } from '../../StateProvider/StateProvider';
 
 const StyledVideo = styled.video`
   height: 31%;
@@ -45,10 +46,13 @@ const VideoFeed = () => {
   const [video, setVideo] = useState(true);
   const [audio, setAudio] = useState(false);
   const [peers, setPeers] = useState([]);
+
+  const [state, dispatch] = useStateValue();
   const socketRef = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
   const { roomId } = useParams();
+  const user = JSON.parse(sessionStorage.getItem('jwt'));
 
   useEffect(() => {
     socketRef.current = io.connect('http://localhost:4050');
@@ -57,9 +61,11 @@ const VideoFeed = () => {
       .getUserMedia({ video: videoConstraints, audio: audio })
       .then((stream) => {
         //userVideo.current.srcObject = stream;
-        socketRef.current.emit('join room', roomId);
+        socketRef.current.emit('join room', roomId, user.user._id);
+
         socketRef.current.on('all users', (users) => {
           const peers = [];
+          console.log('USERS IN FEED', users);
           users.forEach((userID) => {
             const peer = createPeer(userID, socketRef.current.id, stream);
             peersRef.current.push({
@@ -72,6 +78,7 @@ const VideoFeed = () => {
         });
 
         socketRef.current.on('user joined', (payload) => {
+          console.log('user joined');
           const peer = addPeer(payload.signal, payload.callerID, stream);
           peersRef.current.push({
             peerID: payload.callerID,
@@ -85,6 +92,11 @@ const VideoFeed = () => {
           item.peer.signal(payload.signal);
         });
       });
+    return () => {
+      socketRef.current.disconnect();
+      //console.log(peersRef.current[0]);
+      peersRef.current[0].peer.destroy();
+    };
   }, []);
 
   useEffect(() => {
@@ -103,6 +115,7 @@ const VideoFeed = () => {
       trickle: false,
       stream,
     });
+    console.log('create peer');
     peer.on('signal', (signal) => {
       socketRef.current.emit('sending signal', {
         userToSignal,
@@ -119,9 +132,12 @@ const VideoFeed = () => {
       trickle: false,
       stream,
     });
-
+    console.log('add peer');
     peer.on('signal', (signal) => {
-      socketRef.current.emit('returning signal', { signal, callerID });
+      socketRef.current.emit('returning signal', {
+        signal,
+        callerID,
+      });
     });
 
     peer.signal(incomingSignal);
@@ -141,11 +157,6 @@ const VideoFeed = () => {
           {peers.map((peer, index) => {
             return <Video key={index} peer={peer} />;
           })}
-          {/*<VideoStreamPreview />
-          <VideoStreamPreview />
-          <VideoStreamPreview />
-          <VideoStreamPreview />
-          <VideoStreamPreview />*/}
         </Scrollable>
       </div>
       <div className='videoFeed__buttons'>
@@ -168,6 +179,9 @@ const VideoFeed = () => {
         <div
           className='videoFeed__disconnectButton'
           onClick={() => {
+            socketRef.current.disconnect();
+            //console.log(peersRef.current[0]);
+            peersRef.current[0].peer.destroy();
             setVideo(false);
             setAudio(false);
             history.push(`/collabboard/${roomId}`);

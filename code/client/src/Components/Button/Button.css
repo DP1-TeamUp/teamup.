@@ -1,15 +1,94 @@
 .button {
-    height: 5vh;
-    min-width: 8vw;
-    max-width: 10vw;
-    background-color: #ff8c42;
-    border-radius: 0.7vw;
-    font-size: 0.8vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-family: 'Open Sans';
-    cursor: pointer;
-    color: #121212;
-  }
+  height: 4.95vh;
+  min-width: 7.95vw;
+  max-width: 9.95vw;
+  background-color: #ff8c42;
+  border-radius: 0.7vw;
+  font-size: 0.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: 'Open Sans';
+  cursor: pointer;
+  color: #121212;
+  transition: all 0.1s ease-in-out;
+  border: 1px solid #ff8c42;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0);
+  color: #ff8c42;
+  border: 1px solid #ff8c42;
+}
+
+.greenButton {
+  height: 4.95vh;
+  min-width: 7.95vw;
+  max-width: 9.95vw;
+  background-color: #42ff6c;
+  border-radius: 0.7vw;
+  font-size: 0.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: 'Open Sans';
+  cursor: pointer;
+  color: #121212;
+  transition: all 0.1s ease-in-out;
+  border: 0.01vh solid #42ff6c;
+}
+
+.greenButton:hover {
+  background-color: #252525;
+  color: #42ff6c;
+  border: 0.01vh solid #42ff6c;
+}
+
+.redButton {
+  height: 4.95vh;
+  min-width: 7.95vw;
+  max-width: 9.95vw;
+  background-color: #252525;
+  border-radius: 0.7vw;
+  font-size: 0.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: 'Open Sans';
+  cursor: pointer;
+  color: #fa5959;
+  transition: all 0.1s ease-in-out;
+  border: 0.01vh solid #fa5959;
+}
+
+.redButton:hover {
+  background-color: #fa5959;
+  color: #121212;
+  border: 0.01vh solid #fa5959;
+}
+
+.neutral {
+  height: 4.95vh;
+  min-width: 7.95vw;
+  max-width: 9.95vw;
+  background-color: #252525;
+  border-radius: 0.7vw;
+  font-size: 0.8vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: 'Open Sans';
+  cursor: pointer;
+  color: #ff8c42;
+  transition: all 0.1s ease-in-out;
+  border: 1px solid #ff8c42;
+}
+
+.neutral:hover {
+  background-color: rgba(236, 165, 83, 0.904);
+  color: #121212;
+}

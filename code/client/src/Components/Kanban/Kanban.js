@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { v4 as uuidv4 } from "uuid";
-import Scrollable from "../Scrollable/Scrollable";
-import { Avatar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { deepPurple } from "@material-ui/core/colors";
+import React, { useState } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
+import Scrollable from '../Scrollable/Scrollable';
+import { Avatar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { deepPurple } from '@material-ui/core/colors';
 
-import "./Kanban.css";
+import './Kanban.css';
 
 const useStyles = makeStyles((theme) => ({
   purple: {
@@ -14,30 +14,30 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: deepPurple[500],
     width: theme.spacing(3.5),
     height: theme.spacing(3.5),
-    fontSize: "3vh",
+    fontSize: '3vh',
   },
 }));
 
 const itemsFromBackend = [
-  { id: uuidv4(), content: "First task" },
-  { id: uuidv4(), content: "Second task" },
-  { id: uuidv4(), content: "Third task" },
-  { id: uuidv4(), content: "Fourth task" },
-  { id: uuidv4(), content: "Fifth task" },
-  { id: uuidv4(), content: "Last task" },
+  { id: uuidv4(), content: 'First task' },
+  { id: uuidv4(), content: 'Second task' },
+  { id: uuidv4(), content: 'Third task' },
+  { id: uuidv4(), content: 'Fourth task' },
+  { id: uuidv4(), content: 'Fifth task' },
+  { id: uuidv4(), content: 'Last task' },
 ];
 
 const columnsFromBackend = {
   [uuidv4()]: {
-    name: "Pending",
+    name: 'Pending',
     items: itemsFromBackend,
   },
   [uuidv4()]: {
-    name: "Ongoing",
+    name: 'Ongoing',
     items: [],
   },
   [uuidv4()]: {
-    name: "Completed",
+    name: 'Completed',
     items: [],
   },
 };
@@ -84,15 +84,14 @@ const Kanban = () => {
 
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
-    <div className="kanban">
+    <div className='kanban'>
       <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-      >
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
         {Object.entries(columns).map(([columnId, column], index) => {
           return (
-            <div className="kanban__columnSpace" key={columnId}>
-              <div className="kanban__columnHeader">{column.name}</div>
-              <div className="kanban__columnBody">
+            <div className='kanban__columnSpace' key={columnId}>
+              <div className='kanban__columnHeader'>{column.name}</div>
+              <div className='kanban__columnBody'>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
                     return (
@@ -102,19 +101,17 @@ const Kanban = () => {
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
-                              ? "#525252"
-                              : "#252525",
-                            width: "100%",
-                            minHeight: "100%",
-                          }}
-                        >
+                              ? '#525252'
+                              : '#252525',
+                            width: '100%',
+                            minHeight: '100%',
+                          }}>
                           {column.items.map((item, index) => {
                             return (
                               <Draggable
                                 key={item.id}
                                 draggableId={item.id}
-                                index={index}
-                              >
+                                index={index}>
                                 {(provided, snapshot) => {
                                   return (
                                     <div
@@ -122,20 +119,19 @@ const Kanban = () => {
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
-                                        userSelect: "none",
-                                        padding: "1vh 1vw",
-                                        margin: "0 0 1vh 0",
-                                        minHeight: "1vh",
+                                        userSelect: 'none',
+                                        padding: '1vh 1vw',
+                                        margin: '0 0 1vh 0',
+                                        minHeight: '1vh',
                                         backgroundColor: snapshot.isDragging
-                                          ? "#FF8C42"
-                                          : "#252525",
-                                        color: "white",
+                                          ? '#FF8C42'
+                                          : '#252525',
+                                        color: 'white',
                                         ...provided.draggableProps.style,
-                                      }}
-                                    >
-                                      <div className="task__div">
-                                        <div className="task__story">
-                                          <div className="task__color"></div>
+                                      }}>
+                                      <div className='task__div'>
+                                        <div className='task__story'>
+                                          <div className='task__color'></div>
                                           {item.content}
                                         </div>
                                         <Avatar className={classes.purple}>

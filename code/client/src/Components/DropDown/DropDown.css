@@ -21,7 +21,7 @@
 }
 
 .dropdown__text:after {
-  content: "";
+  content: '';
   transition: all 0.3s;
   border: solid #ff8c42;
   border-width: 0 0.1vh 0.1vh 0;

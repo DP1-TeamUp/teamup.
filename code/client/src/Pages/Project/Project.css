@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap');
 
 .project {
   background: #121212;
@@ -15,7 +15,7 @@
 
 .project__logo {
   color: #ff8c42;
-  font-family: "Righteous";
+  font-family: 'Righteous';
   margin-left: 4vw;
   font-size: 4vh;
   margin-top: 2vh;
@@ -33,13 +33,14 @@
   width: 7vw;
   padding: 0.5vh;
   border-radius: 5vh;
+  cursor: pointer;
 }
 
 .project__name {
   padding-right: 1.2vw;
   color: #f2f2f2;
   font-size: 2vh;
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
 }
 
 .project__content {
@@ -52,7 +53,7 @@
 
 .project__contentText {
   color: #f2f2f2;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   font-size: 5vh;
   display: flex;
   align-items: center;

@@ -1,82 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap');
 .taskboard {
-    height: 86vh;
-    width: 85vw;
-    background: #121212;
-    padding-left: 1.8vw;
-    padding-top: 4vh;
-  }
-  
-  .taskboard__navbar {
-    margin-bottom: 3vh;
-    display: flex;
-  }
-  
-  .taskboard__content {
-    background-color: #121212;
-    height: 71.5vh;
-    width: 79vw;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-  }
-  
-  .taskboard__content::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .taskboard__taskBoard {
-    display: inline-block;
-    border-radius: 2.5vh;
-    height: 71.5vh;
-    width: 25vw;
-    margin-right: 1.5vw;
-    overflow: hidden;
-  }
-  
-  .taskboard__red {
-    background-color: #fa5959;
-    border-radius: 2.5vh;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .taskboard__green {
-    background-color: #42ffd2;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .taskboard__purple {
-    background-color: #8a42ff;
-    border-radius: 2.5vh;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .taskboard__yellow {
-    background-color: #fbff42;
-    border-radius: 2.5vh;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .taskboard__header {
-    color: #121212;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    font-family: 'Montserrat';
-    font-weight: 700;
-    font-size: 1.25vw;
-    height: 8%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .taskboard__taskList {
-    height: 92%;
-    width: 100%;
-    background-color: #252525;
-    border-radius: 0vh 0vh 2.5vh 2.5vh;
-    padding-top: 1vw;
-  }
+  height: 86vh;
+  width: 85vw;
+  background: #121212;
+  padding-left: 1.8vw;
+  padding-top: 4vh;
+}
+
+.taskboard__navbar {
+  margin-bottom: 3vh;
+  display: flex;
+}
+
+.taskboard__content {
+  background-color: #121212;
+  height: 71.5vh;
+  width: 79vw;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.taskboard__content::-webkit-scrollbar {
+  display: none;
+}
+
+.taskboard__taskBoard {
+  display: inline-block;
+  border-radius: 2.5vh;
+  height: 71.5vh;
+  width: 25vw;
+  margin-right: 1.5vw;
+  overflow: hidden;
+}
+
+.taskboard__red {
+  background-color: #fa5959;
+  border-radius: 2.5vh;
+  height: 100%;
+  width: 100%;
+}
+
+.taskboard__green {
+  background-color: #42ffd2;
+  height: 100%;
+  width: 100%;
+}
+
+.taskboard__purple {
+  background-color: #8a42ff;
+  border-radius: 2.5vh;
+  height: 100%;
+  width: 100%;
+}
+
+.taskboard__yellow {
+  background-color: #fbff42;
+  border-radius: 2.5vh;
+  height: 100%;
+  width: 100%;
+}
+
+.taskboard__header {
+  color: #121212;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1.2vw;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.taskboard__addTask {
+  cursor: pointer;
+}
+
+.taskboard__taskList {
+  height: 90%;
+  width: 100%;
+  background-color: #252525;
+  border-radius: 0vh 0vh 2.5vh 2.5vh;
+  padding-top: 1vw;
+}
