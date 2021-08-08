@@ -1,0 +1,42 @@
+.navbar {
+  height: 9.8vh;
+  position: sticky;
+  background-color: #121212;
+  border-bottom: 0.2vh solid #ff8c42;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__logo {
+  color: #ff8c42;
+  font-family: 'Righteous';
+  margin-left: 2vw;
+  font-size: 4vh;
+  cursor: pointer;
+}
+
+.navbar__right {
+  margin-right: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__icon {
+  color: #5f5f5f;
+  margin-left: 3vw;
+  margin-right: 3vw;
+  cursor: pointer;
+}
+
+.navbar__profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0.2vh solid #ff8c42;
+  min-width: 6.5vw;
+  padding: 0.5vh;
+  border-radius: 5vh;
+  cursor: pointer;
+}

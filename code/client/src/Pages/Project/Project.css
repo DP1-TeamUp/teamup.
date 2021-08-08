@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap');
+
+.project {
+  background: #121212;
+  height: 100vh;
+}
+
+.project__navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project__logo {
+  color: #ff8c42;
+  font-family: 'Righteous';
+  margin-left: 4vw;
+  font-size: 4vh;
+  margin-top: 2vh;
+  padding-bottom: 2vh;
+  cursor: pointer;
+}
+
+.project__accountInfo {
+  margin-right: 4vw;
+  margin-top: 2vh;
+  border: 1px solid #ff8c42;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 7vw;
+  padding: 0.5vh;
+  border-radius: 5vh;
+  cursor: pointer;
+}
+
+.project__name {
+  padding-right: 1.2vw;
+  color: #f2f2f2;
+  font-size: 2vh;
+  font-family: 'Open Sans';
+}
+
+.project__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 25vh;
+}
+
+.project__contentText {
+  color: #f2f2f2;
+  font-family: 'Montserrat';
+  font-size: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.project__buttondiv {
+  margin-top: 5vh;
+  display: flex;
+  align-items: center;
+}
+
+.project__buttondrop {
+  border: 1px solid #ff8c42;
+  border-radius: 1.5vh;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  width: 11vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f2f2f2;
+  font-size: 1vw;
+  height: 3vh;
+  cursor: pointer;
+}
+
+.project__buttondropText {
+  flex: 1;
+  margin-left: 1vh;
+}
+
+.project__icon {
+  color: #ff8c42;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1vh;
+}
+
+.project__smallText {
+  color: #f2f2f2;
+  font-size: 2vh;
+  margin: 0vh 1vh;
+}
+
+.project__button {
+  background-color: #ff8c42;
+  border-radius: 1.5vh;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  width: 11vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #121212;
+  font-size: 2vh;
+  height: 4.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}

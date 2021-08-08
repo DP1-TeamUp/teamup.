@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+
+.signin {
+  background-color: #121212;
+  height: 100vh;
+}
+
+.signin__navbar {
+  font-family: 'Righteous', cursive;
+  color: #ff8c42;
+  margin-left: 10vw;
+  font-size: 5vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  cursor: pointer;
+}
+
+.bottomMargin {
+  margin-bottom: -7.5vh;
+}
+.signin__bigTextContainer {
+  padding-top: 5vh;
+  padding-bottom: 3vh;
+  margin-left: 10vw;
+  padding-bottom: 2vh;
+  color: #f2f2f2;
+  font-size: 2.5vw;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.signin__imageContainer {
+  padding-top: 3vh;
+  margin-left: 10vw;
+  height: 50vh;
+  width: 40vw;
+}
+
+.signin__image {
+  padding-top: 3vh;
+  height: 50vh;
+  width: 40vw;
+}
+
+.signin__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.signin__contentRight {
+  margin-top: 15vh;
+  margin-right: 10vw;
+}
+
+.signin__form {
+  /*position: absolute;
+  bottom: 12vh;
+  right: 10vw;*/
+  background-color: #252525;
+  border-radius: 3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #f2f2f2;
+}
+
+.signin__header {
+  font-size: 1.5vw;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  padding: 3.5vh 1.5vw;
+}
+
+.signin__inputdiv {
+  padding: 1vh 2vw;
+  margin-bottom: 1vh;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.signin__label {
+  font-size: 0.9vw;
+  font-weight: 800;
+  color: #f2f2f2;
+  margin-bottom: 0.8vh;
+}
+
+.signin__input {
+  height: 2.5vh;
+  width: 20vw;
+  background: #a3a3a3;
+  border: none;
+  outline: none;
+  padding: 0.5vh 0.5vw;
+  border-radius: 1.5vh;
+  font-size: 0.9vw;
+  border: 0.3vh solid #ff8c42;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.signin__forgetPassword {
+  position: relative;
+  top: -1vh;
+  left: -7vw;
+  color: #ff8c42;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.8vw;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.signin__button {
+  margin-top: 3.5vh;
+  background: #ff8c42;
+  color: #121212;
+  border: none;
+  outline: none;
+  height: 4vh;
+  width: 6vw;
+  border-radius: 1vh;
+  cursor: pointer;
+  font-size: 0.9vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3.5vh;
+  border-radius: 1vh;
+  transition: all 0.3s ease-in-out;
+}
+
+.signin__switchState {
+  margin-top: 2.5vh;
+  display: flex;
+  margin-bottom: 3vh;
+  font-size: 2vh;
+}
+
+.signin__orange {
+  color: #ff8c42;
+  padding-left: 1vh;
+}

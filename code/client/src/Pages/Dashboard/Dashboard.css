@@ -1,0 +1,229 @@
+.dashboard {
+  height: 86vh;
+  width: 85vw;
+  background: #121212;
+  padding-left: 1.8vw;
+  padding-top: 4vh;
+  font-family: 'Open Sans';
+  overflow: hidden;
+}
+
+.dashboard__navbar {
+  margin-bottom: 3vh;
+}
+
+.dashboard__content {
+  background-color: #121212;
+  height: 72vh;
+  width: 79vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard__contentColumnOne {
+  width: 25vw;
+  height: 100%;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateY(110%);
+  -webkit-transform: translateY(110%);
+}
+
+.slide__downC1 {
+  animation: slide-downC1 1s forwards;
+  -webkit-animation: slide-downC1 1s forwards;
+  animation-delay: 0.7s;
+}
+
+@-webkit-keyframes slide-downC1 {
+  100% {
+    -webkit-transform: translateY(0%);
+  }
+}
+
+@keyframes slide-downC1 {
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.dashboard__projectDescription {
+  width: 100%;
+  height: 30%;
+  background-color: #252525;
+  color: #f2f2f2;
+  font-family: 'Open Sans';
+  border-radius: 2.5vh;
+}
+
+.dashboard__descriptionTitle {
+  font-size: 1.4vw;
+  padding: 1vh 1vw;
+  font-family: 'Montserrat';
+}
+
+.dashboard__description {
+  font-size: 1vw;
+  padding: 1vh 1vw;
+}
+
+.dashboard__sprintSection {
+  width: 100%;
+  height: 65%;
+  background-color: #252525;
+  border-radius: 2.5vh;
+  color: #f2f2f2;
+}
+
+.dashboard__sprintContent {
+  height: 80%;
+  width: 100%;
+  margin-top: 1vh;
+  padding-right: 2vw;
+}
+
+.dashboard__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vh 1vw;
+  /*background-color: red;*/
+}
+
+.dashboard__titleName {
+  font-size: 1.4vw;
+  font-family: 'Montserrat';
+}
+
+.dashboard__orange {
+  color: #ff8c42;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1vw;
+  cursor: pointer;
+}
+
+.dashboard__orangeText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard__orangeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard__contentColumnTwo {
+  width: 25vw;
+  height: 100%;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #f2f2f2;
+  transform: translateY(110%);
+  -webkit-transform: translateY(110%);
+}
+
+.slide__downC2 {
+  animation: slide-downC2 1.2s forwards;
+  -webkit-animation: slide-downC2 1.2s forwards;
+  animation-delay: 0.7s;
+}
+
+@-webkit-keyframes slide-downC2 {
+  100% {
+    -webkit-transform: translateY(0%);
+  }
+}
+
+@keyframes slide-downC2 {
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.dashboard__myTaskSection {
+  height: 65%;
+  width: 100%;
+  background-color: #252525;
+  border-radius: 2.5vh;
+}
+
+.dashboard__myTaskContent {
+  margin-top: 1vh;
+  height: 80%;
+  width: 100%;
+}
+
+.dashboard__collabBoardSection {
+  height: 30%;
+  width: 100%;
+  background-color: #252525;
+  border-radius: 2.5vh;
+}
+
+.dashboard__contentColumnThree {
+  width: 25vw;
+  height: 100%;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #f2f2f2;
+  transform: translateX(110%);
+  -webkit-transform: translateX(110%);
+}
+
+.slide__downC3 {
+  animation: slide-downC2 0.7s forwards;
+  -webkit-animation: slide-downC2 0.7s forwards;
+  animation-delay: 0.7s;
+}
+
+@-webkit-keyframes slide-downC3 {
+  100% {
+    -webkit-transform: translateX(0%);
+  }
+}
+
+@keyframes slide-downC3 {
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.dashboard__reportSection {
+  width: 100%;
+  height: 50%;
+  background-color: #252525;
+  border-radius: 2.5vh;
+}
+
+.dashboard__teamSection {
+  width: 100%;
+  height: 45%;
+  background-color: #252525;
+  border-radius: 2.5vh;
+}
+
+.dashboard__singleMember {
+  display: flex;
+  align-items: center;
+  padding-left: 1.2vw;
+  margin-top: 2vh;
+  font-size: 1vw;
+}
+
+.dashboard__singleMemberName {
+  margin-left: 1.2vw;
+}
