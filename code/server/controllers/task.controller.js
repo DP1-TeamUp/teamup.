@@ -275,6 +275,13 @@ const updateTaskFromKanban = async (req, res) => {
     });
   }
 
+  if (sprint.startTime > currentTime) {
+    return res.status(500).json({
+      success: false,
+      message: 'The Sprint has not started yet',
+    });
+  }
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
