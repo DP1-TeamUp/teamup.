@@ -96,10 +96,9 @@ const listAllTasksByProjectId = async (req, res) => {
   const projectId = req.params.projectId;
   let tasks;
   try {
-    tasks = await Task.find({ projectId: ObjectId(projectId) }).populate(
-      'assignedTo',
-      'image'
-    );
+    tasks = await Task.find({ projectId: ObjectId(projectId) })
+      .populate('assignedTo', 'image')
+      .populate('sprintId', 'sprintNo');
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -136,17 +135,6 @@ const listMyTasks = async (req, res) => {
 const updateTaskFromEpic = async (req, res) => {
   const taskId = req.params.taskId;
 
-  let sprint;
-  try {
-    sprint = await Sprint.findById(req.body.sprintId);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: 'Something went wrong with the sprint Id please try again',
-    });
-  }
-
   let task;
   try {
     task = await Task.findById(taskId);
@@ -158,22 +146,73 @@ const updateTaskFromEpic = async (req, res) => {
     });
   }
 
-  if (sprint) {
-    task.status = 'planned';
-    task.sprintId = req.body.sprintId;
+  let alreadyAssignedSprint;
+  try {
+    alreadyAssignedSprint = await Sprint.findById(task.sprintId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Unexpected Error with previously assigned sprint',
+    });
   }
-  task.assignedTo = req.body.assignedTo;
-  task.story = req.body.story;
-  task.points = req.body.points;
+
+  let sprint;
+  if (req.body.sprintId) {
+    try {
+      sprint = await Sprint.findById(req.body.sprintId);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        success: false,
+        message: 'Something went wrong with the sprint Id please try again',
+      });
+    }
+  }
+
+  if (sprint) {
+    const currentTime = new Date();
+    if (sprint.endTime < currentTime) {
+      return res.status(500).json({
+        success: false,
+        message: 'Selected sprint is completed',
+      });
+    }
+  }
 
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
-
+    if (sprint) {
+      if (alreadyAssignedSprint) {
+        if (task.status === 'completed') {
+          alreadyAssignedSprint.completed.pull(taskId);
+        } else if (task.status === 'ongoing') {
+          alreadyAssignedSprint.ongoing.pull(taskId);
+        } else {
+          alreadyAssignedSprint.pending.pull(taskId);
+        }
+        alreadyAssignedSprint.velocity =
+          alreadyAssignedSprint.velocity - task.points;
+        await alreadyAssignedSprint.save({ session: sess });
+      }
+      sprint.pending.push(taskId);
+      task.sprintId = req.body.sprintId;
+      task.status = 'planned';
+      sprint.velocity = sprint.velocity + req.body.points;
+      await sprint.save({ session: sess });
+    }
+    if (!sprint) {
+      if (alreadyAssignedSprint) {
+        alreadyAssignedSprint.velocity =
+          alreadyAssignedSprint.velocity - task.points + req.body.points;
+        await alreadyAssignedSprint.save({ session: sess });
+      }
+    }
+    task.assignedTo = req.body.assignedTo;
+    task.story = req.body.story;
+    task.points = req.body.points;
     await task.save({ session: sess });
-    sprint.pending.push(taskId);
-    sprint.velocity = sprint.velocity + task.points;
-    await sprint.save({ session: sess });
     await sess.commitTransaction();
 
     return res.status(500).json({
@@ -184,7 +223,7 @@ const updateTaskFromEpic = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       success: false,
-      message: 'Something went wrong with the task Id please try again',
+      message: 'Something went wrong updating',
     });
   }
 };
@@ -228,6 +267,14 @@ const updateTaskFromKanban = async (req, res) => {
     });
   }
 
+  const currentTime = new Date();
+  if (sprint.endTime < currentTime) {
+    return res.status(500).json({
+      success: false,
+      message: 'This Sprint is completed',
+    });
+  }
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -268,10 +315,33 @@ const updateTaskFromKanban = async (req, res) => {
   }
 };
 
+const deleteTask = async (req, res) => {
+  const taskId = req.params.taskId;
+
+  let task;
+  try {
+    task = await Task.findById(taskId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with finding the task to delete',
+    });
+  }
+
+  if (!task) {
+    return res.status(404).json({
+      success: false,
+      message: 'Task not does not exist',
+    });
+  }
+};
+
 module.exports = {
   create,
   listAllTasksByProjectId,
   listMyTasks,
   updateTaskFromEpic,
   updateTaskFromKanban,
+  deleteTask,
 };
