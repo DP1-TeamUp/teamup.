@@ -15,7 +15,7 @@
 
 .kanban__columnHeader {
   color: #121212;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: #ff8c42;
   width: 24vw;
   height: 9%;
@@ -39,7 +39,7 @@
 .task__div {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .task__story {
@@ -55,4 +55,16 @@
   width: 1.5vh;
   background: #42ffd2;
   border-radius: 50%;
+}
+
+.empty__Kanban {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  width: 100%;
+  font-size: 1.2vw;
+  font-family: "Montserrat";
+
+  color: #3a3a3a;
 }

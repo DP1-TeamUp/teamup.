@@ -13,11 +13,16 @@ const Sidebar = () => {
   const [{ project }, dispatch] = useStateValue();
   const { projectId } = useParams();
   const { roomId } = useParams();
+  const { sprintId } = useParams();
   const projectID = project.id || projectId;
 
   const collabboardRoute = roomId
     ? `/room/${roomId}`
     : `/collabboard/${projectID}`;
+
+  const sprintRoute = sprintId
+    ? `/sprint/${sprintId}`
+    : `/scrumboard/${projectID}`;
 
   return (
     <div className='sidebar'>
@@ -41,7 +46,7 @@ const Sidebar = () => {
           <div className='sidebar__tabText'>Epics & Backlog</div>
         </NavLink>
         <NavLink
-          to={`/scrumboard/${projectID}`}
+          to={sprintRoute}
           activeStyle={{ color: '#ff8c42' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>

@@ -11,7 +11,51 @@
 }
 
 .reports__content {
-  background-color: white;
+  background-color: #121212;
   height: 71vh;
-  width: 81vw;
+  width: 79vw;
+}
+
+.reports__firstRow {
+  width: 79vw;
+  height: 35.5vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.reports__rowOneChart {
+  width: 25vw;
+  height: 34vh;
+  background: #252525;
+  border-radius: 1.5vh;
+  color: #f2f2f2;
+}
+
+.reports__rowOneContent {
+  height: 100%;
+  width: 100%;
+}
+
+.reports__rowOneTitle {
+  font-size: 1.4vw;
+  padding: 1vh 1vw;
+
+  font-family: 'Montserrat';
+}
+
+.reports__secondRow {
+  width: 79vw;
+  height: 35.5vh;
+  color: #f2f2f2;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.reports__rowTwoChart {
+  height: 34vh;
+  width: 38.5vw;
+  background: #252525;
+  border-radius: 1.5vh;
 }

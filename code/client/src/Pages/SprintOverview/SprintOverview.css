@@ -1,0 +1,167 @@
+.sprintOverview {
+    height: 86vh;
+    width: 85vw;
+    background: #121212;
+    padding-left: 1.8vw;
+    padding-top: 4vh;
+  }
+  
+  .sprintOverview__navbar {
+    margin-bottom: 3vh;
+    display: flex;
+  }
+  
+  .sprintOverview__content {
+    height: 72vh;
+    width: 79vw;
+    background: #121212;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sprintOverview__contentRight {
+    width: 38.5vw;
+    height: 72vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sprintOverview__contentRightTop {
+    width: 38.5vw;
+    height: 33.5vh;
+    background: #ff8c42;
+    border-radius: 2.5vh;
+  }
+  
+  .sprintOverview__contentRightBottom {
+    width: 38.5vw;
+    height: 33.5vh;
+    background: #ff8c42;
+    border-radius: 2.5vh;
+  }
+  
+  .sprintOverview__contentLeft {
+    background: #ff8c42;
+    width: 38.5vw;
+    height: 72vh;
+    border-radius: 2.5vh;
+  }
+  
+  .sprintOverview__header {
+    color: #121212;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    font-size: 1.2vw;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .sprintOverview__contentOverviewSmall {
+    height: 27.5vh;
+    width: 100%;
+    background: #252525;
+    border-radius: 0vh 0vh 2.5vh 2.5vh;
+  }
+  
+  .sprintOverview__contentOverviewLarge {
+    height: 66vh;
+    width: 100%;
+    background: #252525;
+    border-radius: 0vh 0vh 2.5vh 2.5vh;
+  }
+  
+  .noData__text {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    width: 100%;
+    color: #525252;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5vw;
+  }
+  
+  .sprintOverview__sprintOverview {
+    padding-left: 1vw;
+    padding-top: 2vh;
+    border-bottom: 1px solid #525252;
+  }
+  
+  .sprintOverview__sprintHeader {
+    font-size: 1.2vw;
+    color: #f2f2f2;
+    font-family: 'Montserrat';
+  }
+  
+  .sprintOverview__sprintBody {
+    display: flex;
+    justify-content: space-between;
+    color: #f2f2f2;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+  
+  .sprintOverview__sprintInfoGroup {
+    display: flex;
+  }
+  
+  .sprintOverview__sprintInfo {
+    margin-left: 1vh;
+  }
+  
+  .sprintOverview__sprintBodyRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ff8c42;
+  }
+  
+  .sprintOverview__chartSection {
+    height: 53.25vh;
+    border-radius: 0vh 0vh 2.5vh 2.5vh;
+    width: 100%;
+    padding-left: 1vw;
+    padding-top: 2vh;
+    color: #f2f2f2;
+    position: relative;
+  }
+  
+  .sprintOverview__chartInfo {
+    position: absolute;
+    bottom: 10vh;
+    left: 3vw;
+  }
+  
+  .sprintOverview__pendingColor {
+    height: 0.7vw;
+    width: 0.7vw;
+    background: #2d2d2d;
+    margin-right: 0.3vw;
+    border-radius: 50%;
+  }
+  
+  .sprintOverview__ongoingColor {
+    height: 0.7vw;
+    width: 0.7vw;
+    background: #00aaf2;
+    margin-right: 0.3vw;
+    border-radius: 50%;
+  }
+  
+  .sprintOverview__completedColor {
+    height: 0.7vw;
+    width: 0.7vw;
+    background: #8f44fd;
+    margin-right: 0.3vw;
+    border-radius: 50%;
+  }
+  
+  .sprintOverview__chartInfoGroup {
+    display: flex;
+    align-items: center;
+  }
