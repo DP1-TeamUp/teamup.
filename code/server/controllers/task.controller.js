@@ -5,6 +5,7 @@ const Project = require('../models/project.model');
 const ObjectId = require('mongodb').ObjectID;
 const transporter = require('../helper/nodemailer');
 const mongoose = require('mongoose');
+const Board = require('../models/board.model');
 
 const create = async (req, res) => {
   let task = new Task(req.body);
@@ -54,9 +55,41 @@ const create = async (req, res) => {
     });
   }
   if (!project) {
-    return res.status(500).json({
+    return res.status(404).json({
       success: false,
       message: 'Related Project does not exist',
+    });
+  }
+
+  let board;
+  try {
+    board = await Board.findById(req.body.boardId);
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the Epic',
+    });
+  }
+
+  if (!board) {
+    return res.status(404).json({
+      success: false,
+      message: 'Epic not found',
+    });
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await task.save({ session: sess });
+    board.task.push(task._id);
+    await board.save({ session: sess });
+    await sess.commitTransaction();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
     });
   }
 
@@ -74,16 +107,6 @@ const create = async (req, res) => {
       console.log('Email sent: ' + info.response);
     }
   });
-
-  try {
-    await task.save();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: 'Something went wrong please try again',
-    });
-  }
 
   return res.status(201).json({
     success: true,
@@ -215,7 +238,7 @@ const updateTaskFromEpic = async (req, res) => {
     await task.save({ session: sess });
     await sess.commitTransaction();
 
-    return res.status(500).json({
+    return res.status(404).json({
       success: true,
       message: 'Updated',
     });
@@ -243,7 +266,7 @@ const updateTaskFromKanban = async (req, res) => {
   }
 
   if (!task) {
-    return res.status(500).json({
+    return res.status(404).json({
       success: false,
       message: 'Task does not exist in the database',
     });
@@ -309,7 +332,7 @@ const updateTaskFromKanban = async (req, res) => {
     await sprint.save({ session: sess });
     await sess.commitTransaction();
 
-    return res.status(500).json({
+    return res.status(200).json({
       success: true,
       message: 'Updated',
     });
@@ -342,6 +365,74 @@ const deleteTask = async (req, res) => {
       message: 'Task not does not exist',
     });
   }
+
+  if (task.status === 'completed') {
+    return res.status(404).json({
+      success: false,
+      message: 'Something finished is not allowed to remove',
+    });
+  }
+
+  let sprint;
+  if (task.sprintId) {
+    try {
+      sprint = await Sprint.findById(task.sprintId);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        success: false,
+        message: 'Something went wrong with the related sprint ',
+      });
+    }
+  }
+
+  let board;
+  try {
+    board = await Board.findById(task.boardId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the related epic ',
+    });
+  }
+
+  if (!board) {
+    return res.status(404).json({
+      success: false,
+      message: 'Related epic not found',
+    });
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    if (sprint) {
+      if (task.status === 'completed') {
+        sprint.completed.pull(taskId);
+      } else if (task.status === 'ongoing') {
+        sprint.ongoing.pull(taskId);
+      } else {
+        sprint.pending.pull(taskId);
+      }
+      sprint.velocity = sprint.velocity - task.points;
+      await sprint.save({ session: sess });
+    }
+    board.task.pull(taskId);
+    await board.save({ session: sess });
+    await task.remove({ session: sess });
+    await sess.commitTransaction();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong deleting the task',
+    });
+  }
+  return res.status(200).json({
+    success: true,
+    message: 'Successfully Deleted the task',
+  });
 };
 
 module.exports = {

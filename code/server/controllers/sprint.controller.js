@@ -181,4 +181,6 @@ const getTaskBySprintId = async (req, res) => {
   });
 };
 
-module.exports = { create, getSprints, getTaskBySprintId };
+const getCurrentSprint = (req, res) => {};
+
+module.exports = { create, getSprints, getTaskBySprintId, getCurrentSprint };
