@@ -13,6 +13,10 @@
   border-radius: 0.7vw;
 }
 
+.task::-webkit-scrollbar {
+  display: none;
+}
+
 .task:hover {
   background-color: #525252;
 }
@@ -31,8 +35,13 @@
   text-align: start;
   flex: 0.8;
   font-size: 0.9vw;
-
+  max-height: 8vh;
+  overflow-y: scroll;
   /*width: 70%;*/
+}
+
+.task__text::-webkit-scrollbar {
+  display: none;
 }
 
 .task__image {
@@ -53,8 +62,13 @@
   padding-left: 0.1vw;
   padding-right: 0.1vw;
   border-radius: 1vw;
+  width: 2.2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #949191;
   color: #949191;
+  padding-bottom: 0.4vh;
 }
 
 .yes_active {
@@ -66,7 +80,21 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 0.4vh;
-  width: 2vw;
+  width: 2.2vw;
+  border: 1px solid yellow;
+  color: yellow;
+}
+
+.done {
+  margin-top: 0.5vh;
+  padding-left: 0.1vw;
+  padding-right: 0.1vw;
+  border-radius: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0.1vw;
+  width: 2.2vw;
   border: 1px solid greenyellow;
   color: greenyellow;
 }
