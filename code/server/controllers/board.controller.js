@@ -48,4 +48,48 @@ const findAllBoardsByProject = async (req, res) => {
   });
 };
 
-module.exports = { create, findAllBoardsByProject };
+const deleteBoard = async (req, res) => {
+  boardId = req.params.boardId;
+
+  let board;
+  try {
+    board = await Board.findById(boardId);
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong while finding the Epic to delete',
+    });
+  }
+
+  if (!board) {
+    return res.status(404).json({
+      success: false,
+      message: 'The Epic is not found in the database',
+    });
+  }
+
+  if (board.task.length > 0) {
+    console.log(board.task);
+    return res.status(504).json({
+      success: false,
+      message: 'not deleting with task for now',
+    });
+  }
+
+  try {
+    await board.remove();
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong while removing the Epic',
+    });
+  }
+  return res.status(200).json({
+    success: true,
+    message: 'Successfully deleted the Epic',
+  });
+};
+
+module.exports = { create, findAllBoardsByProject, deleteBoard };
