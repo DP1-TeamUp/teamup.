@@ -7,5 +7,6 @@ router.route('/api/sprints/:projectId').get(sprintController.getSprints);
 router
   .route('/api/sprints/info/:sprintId')
   .get(sprintController.getTaskBySprintId);
+router.route('/api/sprints/:sprintId/').delete(sprintController.deleteSprint);
 
 module.exports = router;

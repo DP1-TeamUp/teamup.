@@ -3,6 +3,7 @@ const Sprint = require('../models/sprint.model');
 const Project = require('../models/project.model');
 const Task = require('../models/task.model');
 const ObjectId = require('mongodb').ObjectID;
+const { forEach } = require('lodash');
 
 const create = async (req, res) => {
   if (
@@ -181,6 +182,73 @@ const getTaskBySprintId = async (req, res) => {
   });
 };
 
-const getCurrentSprint = (req, res) => {};
+const getCurrentSprint = async (req, res) => {};
 
-module.exports = { create, getSprints, getTaskBySprintId, getCurrentSprint };
+const deleteSprint = async (req, res) => {
+  let sprintId = req.params.sprintId;
+  let sprint;
+  try {
+    sprint = await Sprint.findById(sprintId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong while finding the sprint to delete',
+    });
+  }
+  if (!sprint) {
+    return res.status(404).json({
+      success: false,
+      message: 'The sprint is not found in our database',
+    });
+  }
+
+  let projectId = sprint.projectId;
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    if (sprint.pending) {
+      sprint.pending.forEach(async (pendingId) => {
+        let pending = await Task.findById(pendingId);
+        pending.status = 'Pending';
+        pending.save({ session: sess });
+      });
+    }
+    if (sprint.ongoing) {
+      sprint.ongoing.forEach(async (ongoinId) => {
+        let ongoing = await Task.findById(ongoingId);
+        ongoing.status = 'Pending';
+        ongoing.save({ session: sess });
+      });
+    }
+    if (sprint.completed) {
+      sprint.completed.forEach(async (completedId) => {
+        let completed = await Task.findById(completedId);
+        completed.status = 'Pending';
+        completed.save({ session: sess });
+      });
+    }
+    sprint.remove({ session: sess });
+    await sess.commitTransaction();
+    return res.status(201).json({
+      success: true,
+      message: 'New Sprint deleted successfully',
+      projectId,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong deleting Sprint',
+    });
+  }
+};
+
+module.exports = {
+  create,
+  getSprints,
+  getTaskBySprintId,
+  getCurrentSprint,
+  deleteSprint,
+};
