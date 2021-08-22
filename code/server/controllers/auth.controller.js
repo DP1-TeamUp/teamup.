@@ -5,18 +5,18 @@ const config = require('../../config/config');
 
 const signin = async (req, res) => {
   try {
-    let user = await User.findOne({ email: req.body.email });
+    let user = await User.findOne({ email: req.body.email }).populate({
+      path: 'projects',
+    });
     if (!user)
       return res
         .status(401)
         .json({ success: false, message: 'User not found' });
     if (!user.authenticate(req.body.password)) {
-      return res
-        .status(401)
-        .send({
-          success: false,
-          message: 'Incorrect Password. Please try again.',
-        });
+      return res.status(401).send({
+        success: false,
+        message: 'Incorrect Password. Please try again.',
+      });
     }
 
     const token = jwt.sign({ _id: user._id }, config.jwtSecret);
@@ -30,6 +30,7 @@ const signin = async (req, res) => {
         email: user.email,
         image: user.image,
         username: user.username,
+        projects: user.projects,
       },
     });
   } catch (err) {

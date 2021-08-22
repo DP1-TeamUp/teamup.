@@ -188,7 +188,7 @@ const deleteSprint = async (req, res) => {
   let sprintId = req.params.sprintId;
   let sprint;
   try {
-    sprint = await Sprint.findById(sprintId);
+    sprint = await Sprint.findById(sprintId).populate('projectId');
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -203,7 +203,7 @@ const deleteSprint = async (req, res) => {
     });
   }
 
-  let projectId = sprint.projectId;
+  let projectId = sprint.projectId._id;
 
   try {
     const sess = await mongoose.startSession();
@@ -216,7 +216,7 @@ const deleteSprint = async (req, res) => {
       });
     }
     if (sprint.ongoing) {
-      sprint.ongoing.forEach(async (ongoinId) => {
+      sprint.ongoing.forEach(async (ongoingId) => {
         let ongoing = await Task.findById(ongoingId);
         ongoing.status = 'Pending';
         ongoing.save({ session: sess });
@@ -229,6 +229,8 @@ const deleteSprint = async (req, res) => {
         completed.save({ session: sess });
       });
     }
+    sprint.projectId.sprints.pull(sprintId);
+    await sprint.projectId.save({ session: sess });
     sprint.remove({ session: sess });
     await sess.commitTransaction();
     return res.status(201).json({
