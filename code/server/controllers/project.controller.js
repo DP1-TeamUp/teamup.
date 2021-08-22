@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Project = require('../models/project.model');
 const User = require('../models/user.model');
+const Task = require('../models/task.model');
 
 const create = async (req, res) => {
   let project = new Project(req.body);
@@ -197,6 +198,30 @@ const listOfAllMembersByProjectId = async (req, res) => {
       .json({ success: false, message: 'Project does not exist' });
   }
 
+  let tasks;
+  try {
+    tasks = await Task.find({ projectId: projectId });
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong finding information related to members',
+    });
+  }
+
+  project.members.forEach((member, i) => {
+    member.completed = 0;
+    member.total = 0;
+    tasks.forEach((task, j) => {
+      if (member._id === task.assignedTo) {
+        member.total = member.total + 1;
+        if (task.status === 'completed') {
+          member.completed = member.completed + 1;
+        }
+      }
+    });
+  });
+
   project.members.forEach((x, i) => {
     x.hashed_password = undefined;
     x.salt = undefined;
@@ -210,6 +235,7 @@ const listOfAllMembersByProjectId = async (req, res) => {
     members: project.members,
     admin: project.admin,
     description: project.description,
+    tasks: tasks,
   });
 };
 
