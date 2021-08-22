@@ -1,5 +1,7 @@
 const Board = require('../models/board.model');
 const ObjectId = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
+const Task = require('../models/task.model');
 
 const create = async (req, res) => {
   let board = new Board(req.body);
@@ -53,7 +55,10 @@ const deleteBoard = async (req, res) => {
 
   let board;
   try {
-    board = await Board.findById(boardId);
+    board = await Board.findById(boardId).populate({
+      path: 'task',
+      populate: { path: 'sprintId' },
+    });
   } catch (error) {
     console.log(error);
     return res.status(504).json({
@@ -69,16 +74,45 @@ const deleteBoard = async (req, res) => {
     });
   }
 
-  if (board.task.length > 0) {
-    console.log(board.task);
+  let completedTaskFound = 0;
+  board.task.forEach((task) => {
+    if (task.status === 'completed') {
+      completedTaskFound = 1;
+    }
+    completedTaskFound = completedTaskFound;
+  });
+
+  if (completedTaskFound === 1) {
     return res.status(504).json({
       success: false,
-      message: 'not deleting with task for now',
+      message:
+        'Unable to Delete Epic due to completed tasks are found in the Epic.',
     });
   }
 
   try {
-    await board.remove();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    board.task.forEach(async (task) => {
+      if (task.status === 'planned') {
+        task.sprintId.pending.pull(task._id);
+        task.sprintId.velocity = task.sprintId.velocity - task.points;
+        await task.sprintId.save({ session: sess });
+      }
+      if (task.status === 'ongoing') {
+        task.sprintId.ongoing.pull(task._id);
+        task.sprintId.velocity = task.sprintId.velocity - task.points;
+        await task.sprintId.save({ session: sess });
+      }
+      if (task.status === 'pending') {
+        task.sprintId.pending.pull(task._id);
+        task.sprintId.velocity = task.sprintId.velocity - task.points;
+        await task.sprintId.save({ session: sess });
+      }
+      await Task.findByIdAndDelete(task._id);
+    });
+    await board.remove({ session: sess });
+    await sess.commitTransaction();
   } catch (error) {
     console.log(error);
     return res.status(504).json({

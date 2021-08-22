@@ -3,7 +3,6 @@ const Sprint = require('../models/sprint.model');
 const Project = require('../models/project.model');
 const Task = require('../models/task.model');
 const ObjectId = require('mongodb').ObjectID;
-const { forEach } = require('lodash');
 
 const create = async (req, res) => {
   if (
@@ -212,26 +211,19 @@ const deleteSprint = async (req, res) => {
       sprint.pending.forEach(async (pendingId) => {
         let pending = await Task.findById(pendingId);
         pending.status = 'Pending';
-        pending.save({ session: sess });
+        await pending.save({ session: sess });
       });
     }
     if (sprint.ongoing) {
       sprint.ongoing.forEach(async (ongoingId) => {
         let ongoing = await Task.findById(ongoingId);
         ongoing.status = 'Pending';
-        ongoing.save({ session: sess });
-      });
-    }
-    if (sprint.completed) {
-      sprint.completed.forEach(async (completedId) => {
-        let completed = await Task.findById(completedId);
-        completed.status = 'Pending';
-        completed.save({ session: sess });
+        await ongoing.save({ session: sess });
       });
     }
     sprint.projectId.sprints.pull(sprintId);
     await sprint.projectId.save({ session: sess });
-    sprint.remove({ session: sess });
+    await sprint.remove({ session: sess });
     await sess.commitTransaction();
     return res.status(201).json({
       success: true,
