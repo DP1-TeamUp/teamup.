@@ -209,19 +209,6 @@ const listOfAllMembersByProjectId = async (req, res) => {
     });
   }
 
-  project.members.forEach((member, i) => {
-    member.completed = 0;
-    member.total = 0;
-    tasks.forEach((task, j) => {
-      if (member._id === task.assignedTo) {
-        member.total = member.total + 1;
-        if (task.status === 'completed') {
-          member.completed = member.completed + 1;
-        }
-      }
-    });
-  });
-
   project.members.forEach((x, i) => {
     x.hashed_password = undefined;
     x.salt = undefined;
