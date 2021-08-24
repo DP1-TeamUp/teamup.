@@ -3,7 +3,10 @@ const projectController = require('../controllers/project.controller');
 
 const router = express.Router();
 
-router.route('/api/projects').post(projectController.create);
+router
+  .route('/api/projects')
+  .post(projectController.create)
+  .put(projectController.changeDesignation);
 
 router
   .route('/api/projects/user/:userId')

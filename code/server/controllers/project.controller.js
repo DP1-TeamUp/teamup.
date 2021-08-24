@@ -223,6 +223,9 @@ const listOfAllMembersByProjectId = async (req, res) => {
     admin: project.admin,
     description: project.description,
     tasks: tasks,
+    srDev: project.srDev,
+    jrDev: project.jrDev,
+    intern: project.intern,
   });
 };
 
@@ -311,6 +314,103 @@ const listSprintsByProjectId = async (req, res) => {
   });
 };
 
+const changeDesignation = async (req, res) => {
+  if (!req.body.newDesignation || req.body.memberId || req.body.projectId) {
+  }
+  let user;
+  try {
+    user = await User.findById(req.body.memberId);
+  } catch (error) {
+    return res
+      .status(504)
+      .json({ success: false, message: 'Error Retriving User' });
+  }
+
+  if (!user) {
+    return res
+      .status(404)
+      .json({ success: false, message: 'User do not exist' });
+  }
+
+  const projectId = req.body.projectId;
+  let project;
+  try {
+    project = await Project.findById(projectId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+  if (!project) {
+    return res.status(400).json({
+      success: false,
+      message: 'Something is wrong with your project',
+    });
+  }
+
+  //search current designations
+  let currentDesignation;
+  project.jrDev.forEach((dev) => {
+    if (dev == req.body.memberId) {
+      currentDesignation = 'jr';
+    }
+  });
+  project.srDev.forEach((dev) => {
+    if (dev == req.body.memberId) {
+      currentDesignation = 'sr';
+    }
+  });
+  project.intern.forEach((dev) => {
+    if (dev == req.body.memberId) {
+      currentDesignation = 'intern';
+    }
+  });
+
+  if (project.admin === req.body.memberId) {
+    return res
+      .status(504)
+      .json({ success: false, message: 'Tech lead role cannot be changed' });
+  }
+
+  let newDesignation = req.body.newDesignation;
+  try {
+    //pull out fro previous designation
+    if (currentDesignation === 'intern') {
+      project.intern.pull(req.body.memberId);
+    }
+    if (currentDesignation === 'sr') {
+      project.srDev.pull(req.body.memberId);
+    }
+    if (currentDesignation === 'jr') {
+      project.jrDev.pull(req.body.memberId);
+    }
+
+    //push into new designation
+    if (newDesignation === 'intern') {
+      project.intern.push(req.body.memberId);
+    }
+    if (newDesignation === 'sr') {
+      project.srDev.push(req.body.memberId);
+    }
+    if (newDesignation === 'jr') {
+      project.jrDev.push(req.body.memberId);
+    }
+    await project.save();
+    return res.status(200).json({
+      success: true,
+      message: 'Designation changed successfully',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong changing the designation',
+    });
+  }
+};
+
 module.exports = {
   create,
   findProjectsByUserId,
@@ -319,4 +419,5 @@ module.exports = {
   listOfAllMembersByProjectId,
   removeMemberFromProject,
   listSprintsByProjectId,
+  changeDesignation,
 };

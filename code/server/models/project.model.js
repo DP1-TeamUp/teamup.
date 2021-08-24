@@ -7,6 +7,9 @@ const ProjectSchema = new mongoose.Schema({
   admin: { type: Schema.Types.ObjectId, ref: 'User' },
   members: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
   sprints: [{ type: mongoose.Types.ObjectId, ref: 'Sprint' }],
+  jrDev: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+  srDev: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+  intern: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);
