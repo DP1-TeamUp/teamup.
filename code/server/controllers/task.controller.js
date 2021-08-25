@@ -6,6 +6,7 @@ const ObjectId = require('mongodb').ObjectID;
 const transporter = require('../helper/nodemailer');
 const mongoose = require('mongoose');
 const Board = require('../models/board.model');
+const { setup } = require('../helper/createTag');
 
 const create = async (req, res) => {
   let task = new Task(req.body);
@@ -93,7 +94,7 @@ const create = async (req, res) => {
     });
   }
 
-  const mailOptions = {
+  /*const mailOptions = {
     from: 'teamupp89@gmail.com',
     to: user.email,
     subject: 'New Task on ' + project.name,
@@ -106,7 +107,68 @@ const create = async (req, res) => {
     } else {
       console.log('Email sent: ' + info.response);
     }
+  });*/
+
+  let tasks;
+  try {
+    tasks = await Task.find({ assignedTo: req.body.assignedTo });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  if (tasks.length <= 5) {
+    return res.status(201).json({
+      success: true,
+      message: 'Story Added successfully',
+      task,
+    });
+  }
+
+  let myTasks = [];
+  tasks.forEach((task) => {
+    myTasks.push(task.story);
   });
+
+  let willSendThis = [myTasks];
+
+  try {
+    tasks = await Task.find({
+      projectId: req.body.projectId,
+      assignedTo: { $ne: req.body.assignedTo },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  /*tasks.forEach((task) => {
+    let oneTask = [];
+    oneTask.push(task.story);
+    willSendThis.push(oneTask);
+  });*/
+
+  project.members.forEach((member) => {
+    let oneTask = [];
+    tasks.forEach((task) => {
+      if (String(member) === String(task.assignedTo)) {
+        oneTask.push(task.story);
+        console.log('match');
+      }
+    });
+    if (oneTask.length > 0) {
+      willSendThis.push(oneTask);
+    }
+  });
+
+  console.log(willSendThis);
+  setup(willSendThis);
 
   return res.status(201).json({
     success: true,
