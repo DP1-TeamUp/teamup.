@@ -1,3 +1,5 @@
+const keyword_extractor = require('keyword-extractor');
+
 const formula =
   'no. of times it appearead in a doc * (total no of docments/documens it appeared)';
 
@@ -69,8 +71,37 @@ const setup = (txt) => {
 
   for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
-    console.log(key + ' ' + counts[key].tfidf);
+    //console.log(key + ' ' + counts[key].tfidf);
   }
+
+  extracted_result = keyword_extractor.extract(allwords[0], {
+    languages: 'english',
+    remove_digits: true,
+    return_changed_case: true,
+    remove_duplicates: true,
+  });
+
+  //console.log(extracted_result);
+
+  let final_keys = [];
+  extracted_result.forEach((x) => {
+    keys.forEach((y) => {
+      if (x == y) {
+        final_keys.push(y);
+      }
+    });
+  });
+
+  final_keys.sort(compare);
+
+  final_tags = [];
+  for (var i = 0; i < final_keys.length; i++) {
+    var key = final_keys[i];
+    if (counts[key].tfidf > 0) {
+      final_tags.push({ word: key, score: counts[key].tfidf });
+    }
+  }
+  console.log(final_tags);
 };
 
 module.exports = { setup };

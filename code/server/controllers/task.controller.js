@@ -159,15 +159,12 @@ const create = async (req, res) => {
     tasks.forEach((task) => {
       if (String(member) === String(task.assignedTo)) {
         oneTask.push(task.story);
-        console.log('match');
       }
     });
     if (oneTask.length > 0) {
       willSendThis.push(oneTask);
     }
   });
-
-  console.log(willSendThis);
   setup(willSendThis);
 
   return res.status(201).json({
