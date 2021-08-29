@@ -101,7 +101,7 @@ const setup = (txt) => {
       final_tags.push({ word: key, score: counts[key].tfidf });
     }
   }
-  console.log(final_tags);
+  return final_tags;
 };
 
 module.exports = { setup };

@@ -165,7 +165,18 @@ const create = async (req, res) => {
       willSendThis.push(oneTask);
     }
   });
-  setup(willSendThis);
+  let final_tags = setup(willSendThis);
+
+  try {
+    user.tags = final_tags;
+    await user.save();
+  } catch (error) {
+    return res.status(201).json({
+      success: false,
+      message: 'Something went wrong updating tags',
+      task,
+    });
+  }
 
   return res.status(201).json({
     success: true,
