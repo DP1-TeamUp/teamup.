@@ -520,46 +520,47 @@ const taskSuggester = async (req, res) => {
   }
   let allUsers = project.members;
   let finalNicknames = [];
-  let string = task;
 
   const arrayOfTheTask = (task) => {
     return task.trim().split(' ');
   };
 
   let taskInArray = arrayOfTheTask(task);
-  console.log(' ');
+  //console.log(' ');
 
   console.log('Task to be assigned: ' + task);
 
   allUsers.forEach((user) => {
     let score = 0;
     let nickname = user.username;
-    console.log(' ');
+    //console.log(' ');
     user.tags.forEach((tag) => {
       taskInArray.forEach((word) => {
         if (word === tag.word) {
           score = score + tag.score;
-          console.log(
+          /*console.log(
             nickname +
               ' has knows the word "' +
               tag.word +
               '" with score ' +
               tag.score
-          );
+          );*/
         }
       });
     });
     if (score > 0) {
-      finalNicknames.push({ name: nickname, score: score });
+      finalNicknames.push({
+        name: nickname,
+        score: score.toString().substring(0, 5),
+      });
     }
   });
 
   finalNicknames.sort((a, b) => b.score - a.score);
-  console.log('Suggestions ', finalNicknames);
+  //console.log('Suggestions ', finalNicknames);
 
   return res.status(200).json({
     success: true,
-    message: 'Suggest',
     finalNicknames: finalNicknames,
   });
 };

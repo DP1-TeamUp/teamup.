@@ -12,7 +12,7 @@ const TaskSchema = new mongoose.Schema({
   color: { type: String, trim: true },
   points: { type: Number },
   comments: [],
-  assignedTo: { type: mongoose.Types.ObjectId, required: true, ref: 'User' },
+  assignedTo: { type: mongoose.Types.ObjectId, ref: 'User' },
   projectId: { type: mongoose.Types.ObjectId, required: true, ref: 'Project' },
   status: { type: String, trim: true },
   sprintId: { type: mongoose.Types.ObjectId, ref: 'Sprint' },

@@ -269,11 +269,33 @@ const removeMemberFromProject = async (req, res) => {
       .json({ success: false, message: 'User do not exist' });
   }
 
+  let tasks;
+  try {
+    tasks = await Task.find({
+      projectId: projectId,
+      assignedTo: req.body.memberId,
+      status: { $ne: 'completed' },
+    }).populate('sprintId');
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(504)
+      .json({ success: false, message: 'Failed to remove the member' });
+  }
+
+  tasks.forEach((task) => {
+    task.assignedTo = undefined;
+  });
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     project.members.pull(req.body.memberId);
     await project.save({ session: sess });
+    tasks.forEach(async (task) => {
+      task.assignedTo = undefined;
+      await task.save({ session: sess });
+    });
     user.projects.pull(project);
     await user.save({ session: sess });
     await sess.commitTransaction();
