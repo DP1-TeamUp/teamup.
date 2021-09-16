@@ -32,6 +32,7 @@ const signin = async (req, res) => {
         username: user.username,
         projects: user.projects,
         tags: user.tags,
+        skills: user.skills,
       },
     });
   } catch (err) {

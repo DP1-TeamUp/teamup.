@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpire: Date,
   tags: [],
+  skills: [],
 });
 
 UserSchema.virtual('password')

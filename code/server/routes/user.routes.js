@@ -23,6 +23,10 @@ router
   );
 router.post('/forget-password', userControl.forgetPassword);
 router.put('/reset-password/:resetToken', userControl.resetPassword);
+router
+  .route('/api/skills/users')
+  .put(userControl.addSkills)
+  .delete(userControl.deleteSkill);
 
 router.param('userId', userControl.userByID);
 

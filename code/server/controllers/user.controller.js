@@ -194,6 +194,100 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const addSkills = async (req, res) => {
+  const skill = req.body.skill;
+
+  if (skill.length <= 0) {
+    return res.status(401).json({ success: false, message: 'Field was empty' });
+  }
+  if (skill.length > 15) {
+    return res
+      .status(401)
+      .json({ success: false, message: 'Less than 15 character' });
+  }
+
+  let user;
+
+  try {
+    user = await User.findById(req.body.userId);
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  let skillExits = false;
+  if (user.skills.length !== 0) {
+    user.skills.forEach((storedSkill) => {
+      if (storedSkill === skill) {
+        skillExits = true;
+      }
+    });
+  }
+
+  if (skillExits) {
+    return res.status(404).json({
+      success: false,
+      message: 'This skill already exists',
+    });
+  }
+
+  try {
+    user.skills.push(skill);
+    await user.save();
+    return res.status(504).json({
+      success: true,
+      message: 'Successfully added new skill',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+};
+
+const deleteSkill = async (req, res) => {
+  const skill = req.body.skill;
+
+  if (skill.length > 15) {
+    return res
+      .status(401)
+      .json({ success: false, message: 'Less than 15 character' });
+  }
+
+  let user;
+
+  try {
+    user = await User.findById(req.body.userId);
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  let deletedSkill = user.skills.filter((oneSkill) => oneSkill !== skill);
+  user.skills = deletedSkill;
+  try {
+    await user.save();
+    return res.status(504).json({
+      success: true,
+      message: 'Successfully deleted new skill',
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+};
+
 module.exports = {
   create,
   userByID,
@@ -203,4 +297,6 @@ module.exports = {
   update,
   forgetPassword,
   resetPassword,
+  addSkills,
+  deleteSkill,
 };
