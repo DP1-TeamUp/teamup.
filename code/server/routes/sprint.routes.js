@@ -8,5 +8,8 @@ router
   .route('/api/sprints/info/:sprintId')
   .get(sprintController.getTaskBySprintId);
 router.route('/api/sprints/:sprintId/').delete(sprintController.deleteSprint);
+router
+  .route('/api/currentSprint/:projectId')
+  .get(sprintController.getCurrentSprint);
 
 module.exports = router;

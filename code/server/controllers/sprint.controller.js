@@ -181,7 +181,36 @@ const getTaskBySprintId = async (req, res) => {
   });
 };
 
-const getCurrentSprint = async (req, res) => {};
+const getCurrentSprint = async (req, res) => {
+  let currentSprint;
+  try {
+    currentSprint = await Sprint.findOne({
+      projectId: ObjectId(req.params.projectId),
+      startTime: { $lte: new Date() },
+      endTime: { $gte: new Date() },
+    })
+      .populate({ path: 'pending', populate: { path: 'assignedTo' } })
+      .populate({ path: 'ongoing', populate: { path: 'assignedTo' } })
+      .populate({ path: 'completed', populate: { path: 'assignedTo' } });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Current sprint not loaded',
+    });
+  }
+  if (!currentSprint) {
+    return res.status(404).json({
+      success: false,
+      message: 'No current sprint found',
+    });
+  }
+  return res.status(200).json({
+    success: true,
+    message: 'Retrievied sprint Info',
+    currentSprint,
+  });
+};
 
 const deleteSprint = async (req, res) => {
   let sprintId = req.params.sprintId;
