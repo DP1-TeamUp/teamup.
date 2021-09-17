@@ -12,6 +12,7 @@ const boardRoutes = require('./routes/board.routes');
 const taskRoutes = require('./routes/task.routes');
 const activeRoutes = require('./routes/active.routes');
 const sprintRoutes = require('./routes/sprint.routes');
+const reportsRoutes = require('./routes/reports.routes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/', boardRoutes);
 app.use('/', taskRoutes);
 app.use('/', activeRoutes);
 app.use('/', sprintRoutes);
+app.use('/', reportsRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);
