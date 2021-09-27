@@ -2,7 +2,7 @@
   height: 4.95vh;
   min-width: 7.95vw;
   max-width: 9.95vw;
-  background-color: #ff8c42;
+  background-color: #5bc0eb;
   border-radius: 0.7vw;
   font-size: 0.8vw;
   display: flex;
@@ -11,15 +11,15 @@
   font-weight: 600;
   font-family: 'Open Sans';
   cursor: pointer;
-  color: #121212;
+  color: #101522;
   transition: all 0.1s ease-in-out;
-  border: 1px solid #ff8c42;
+  border: 1px solid #5bc0eb;
 }
 
 .button:hover {
-  background: rgba(255, 255, 255, 0);
-  color: #ff8c42;
-  border: 1px solid #ff8c42;
+  background: #101522;
+  color: #5bc0eb;
+  border: 1px solid #5bc0eb;
 }
 
 .greenButton {
@@ -35,13 +35,13 @@
   font-weight: 600;
   font-family: 'Open Sans';
   cursor: pointer;
-  color: #121212;
+  color: #101522;
   transition: all 0.1s ease-in-out;
   border: 0.01vh solid #42ff6c;
 }
 
 .greenButton:hover {
-  background-color: #252525;
+  background-color: #1f2430;
   color: #42ff6c;
   border: 0.01vh solid #42ff6c;
 }
@@ -50,7 +50,7 @@
   height: 4.95vh;
   min-width: 7.95vw;
   max-width: 9.95vw;
-  background-color: #252525;
+  background-color: #1f2430;
   border-radius: 0.7vw;
   font-size: 0.8vw;
   display: flex;
@@ -66,7 +66,7 @@
 
 .redButton:hover {
   background-color: #fa5959;
-  color: #121212;
+  color: #1f2430;
   border: 0.01vh solid #fa5959;
 }
 
@@ -74,7 +74,7 @@
   height: 4.95vh;
   min-width: 7.95vw;
   max-width: 9.95vw;
-  background-color: #252525;
+  background-color: #1f2430;
   border-radius: 0.7vw;
   font-size: 0.8vw;
   display: flex;
@@ -83,12 +83,12 @@
   font-weight: 600;
   font-family: 'Open Sans';
   cursor: pointer;
-  color: #ff8c42;
+  color: #5bc0eb;
   transition: all 0.1s ease-in-out;
-  border: 1px solid #ff8c42;
+  border: 1px solid #5bc0eb;
 }
 
 .neutral:hover {
-  background-color: rgba(236, 165, 83, 0.904);
-  color: #121212;
+  background-color: rgba(83, 162, 236, 0.904);
+  color: #1f2430;
 }
