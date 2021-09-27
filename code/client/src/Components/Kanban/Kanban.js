@@ -153,10 +153,11 @@ const Kanban = () => {
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
-                              ? '#3a3b3c'
-                              : '#252525',
+                              ? '#333b4e'
+                              : '#1f2430',
                             width: '100%',
                             minHeight: '100%',
+                            padding: '1vh 0',
                           }}>
                           {column.items.map((item, index) => {
                             return (
@@ -172,14 +173,14 @@ const Kanban = () => {
                                       {...provided.dragHandleProps}
                                       style={{
                                         userSelect: 'none',
-                                        padding: '1vh 0.8vw',
+                                        padding: '0vh 0vw',
                                         margin: '0 0 0 0',
                                         minHeight: '1vh',
-                                        borderRadius: '1vh',
+                                        borderRadius: '0vh',
                                         backgroundColor: snapshot.isDragging
-                                          ? '#525252'
-                                          : '#252525',
-                                        color: 'white',
+                                          ? '#2c3134'
+                                          : '#1f2430',
+                                        color: '#f5f939',
                                         ...provided.draggableProps.style,
                                       }}>
                                       <div className='task '>
