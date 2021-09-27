@@ -3,14 +3,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #f2f2f2;
+  color: #f5f9e9;
   font-size: 1.2vw;
   height: 4.5vh;
-  background-color: #252525;
+  background-color: #1f2430;
   border-radius: 1.5vh;
   padding-top: 0.4vh;
   padding-bottom: 0.4vh;
   margin-right: 2vw;
   cursor: pointer;
   font-family: 'Montserrat';
+  font-weight: 800;
 }
