@@ -1,0 +1,68 @@
+.addMember {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(13, 13, 13, 0.7);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .addMember__form {
+    min-height: 20vh;
+    min-width: 30vw;
+    background-color: #1f2430;
+    padding: 2vh 1.5vw;
+    border-radius: 1.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .addMember__top {
+    color: #f5f9e9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.3vw;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 0vh;
+    width: 100%;
+  }
+  
+  .addMember__closeIcon {
+    position: relative;
+    top: -2.5vh;
+    right: -1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #62656c;
+    cursor: pointer;
+  }
+  
+  .addMember__label {
+    margin-top: 3vh;
+  }
+  
+  .addMember__input {
+    background: #1f2430;
+    color: #f5f9e9;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;
+    padding: 0.5vh 0.5vw;
+    outline: none;
+    height: 5vh;
+    width: 95%;
+    border-radius: 1vh;
+    border: 0.1vh solid #5bc0eb;
+    margin-bottom: 1.5vh;
+    overflow: hidden;
+    margin-top: 1.5vh;
+    margin-bottom: 4vh;
+    font-weight: 500;
+  }
