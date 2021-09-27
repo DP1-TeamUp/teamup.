@@ -1,0 +1,26 @@
+.review {
+    height: 110vh;
+    width: 98.72vw;
+    background: #101522;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40vh;
+  }
+  
+  .review__container {
+    height: 80vh;
+    width: 98.72vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .review__slider {
+    height: 80vh;
+    width: 80vw;
+    overflow-x: hidden;
+    padding-top: 4vh;
+    padding-left: 5vw;
+  }
