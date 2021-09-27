@@ -1,0 +1,69 @@
+.hero {
+    height: 90vh;
+    width: 98.72vw;
+    background: #101522;
+  }
+  
+  .hero__top {
+    height: 60vh;
+    width: 80%;
+    margin: 0 9vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .hero__left {
+    height: 60vh;
+    width: 50%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .hero__topTitle {
+    font-size: 5.5vh;
+    font-family: 'Montserrat';
+    font-weight: bold;
+    color: #f5f9e9;
+    margin-bottom: 1.5vh;
+  }
+  
+  .buttonExtraMargin {
+    margin-top: 5vh;
+  }
+  
+  .hero__right {
+    height: 50vh;
+    width: 40vw;
+  }
+  
+  .hero__image {
+    height: 50vh;
+    width: 40vw;
+  }
+  
+  .hero__bottom {
+    color: #f5f9e9;
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: sticky;
+  }
+  
+  .hero__bottomTitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 4vh;
+    margin-bottom: 1vh;
+  }
+  
+  .hero__bottomSubTitle {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2.2vh;
+  }
+  
