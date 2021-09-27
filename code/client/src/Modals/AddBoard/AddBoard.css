@@ -12,8 +12,8 @@
 }
 
 .addboard__container {
-  background-color: #121212;
-  color: #f2f2f2;
+  background-color: #1f2430;
+  color: #f5f9e9;
   min-width: 25vw;
   min-height: 25vh;
   border-radius: 1.5vh;
@@ -38,7 +38,7 @@
 }
 
 .addboard__closeButton {
-  color: #525252;
+  color: #62656c;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -46,20 +46,20 @@
 }
 
 .addboard__closeButton:hover {
-  color: #f2f2f2;
+  color: #f5f9e9;
 }
 
 .addboard__input {
   width: 95%;
-  background-color: #252525;
-  color: #f2f2f2;
+  background-color: #1f2430;
+  color: #f5f9e9;
   font-family: 'Open Sans';
   font-size: 1.1vw;
   padding: 0.5vh 0.5vw;
   outline: none;
   height: 3.5vh;
   border-radius: 1vh;
-  border: 0.1vh solid #ff8c42;
+  border: 0.1vh solid #5bc0eb;
 }
 
 .addboard__colorHeader {
@@ -75,7 +75,7 @@
   justify-content: space-between;
   height: 2.5vw;
   width: 100%;
-  color: #525252;
+  color: #62656c;
 }
 
 .addboard__singleColor {
@@ -141,8 +141,8 @@
 }
 
 .black {
-  background-color: #121212;
-  color: #121212;
+  background-color: #101522;
+  color: #101522;
   width: 100%;
   height: 100%;
 }
@@ -160,7 +160,7 @@
   justify-content: center;
   flex: 0;
   border-radius: 1vh;
-  background-color: #121212;
+  background-color: #1f2430;
 }
 
 .addboard__button {
