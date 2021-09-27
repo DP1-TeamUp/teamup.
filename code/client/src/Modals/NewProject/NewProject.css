@@ -12,8 +12,8 @@
 }
 
 .newproject__container {
-  background-color: #252525;
-  color: #f2f2f2;
+  background-color: #1f2430;
+  color: #f5f9e9;
   min-width: 30vw;
   min-height: 20vh;
   padding: 2vh 1vw;
@@ -45,7 +45,7 @@
 }
 
 .newproject__closeButton {
-  color: #525252;
+  color: #62656c;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,7 +53,7 @@
 }
 
 .newproject__closeButton:hover {
-  color: #f2f2f2;
+  color: #f5f9e9;
 }
 
 .newproject__label {
@@ -63,11 +63,11 @@
 }
 
 .newproject__nameInput {
-  border: 1px solid #ff8c42;
-  background-color: #252525;
+  border: 1px solid #5bc0eb;
+  background-color: #1f2430;
   outline: none;
   width: 30vw;
-  color: #f2f2f2;
+  color: #f5f9e9;
   padding: 0.5vh 0.5vw;
   border-radius: 1vh;
   font-family: 'Open Sans';
@@ -75,11 +75,11 @@
 }
 
 .newproject__descriptionInput {
-  border: 1px solid #ff8c42;
-  background-color: #252525;
+  border: 1px solid #5bc0eb;
+  background-color: #1f2430;
   outline: none;
   width: 30vw;
-  color: #f2f2f2;
+  color: #f5f9e9;
   padding: 0.5vh 0.5vw;
   border-radius: 1vh;
   font-family: 'Open Sans';
