@@ -1,0 +1,85 @@
+.updateTask {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(13, 13, 13, 0.7);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .updateTask__container {
+    min-width: 22.5vw;
+    min-height: 30vh;
+    background: #101522;
+    padding: 2vh 1vw 2vh 1.25vw;
+    border-radius: 1.5vh;
+  }
+  
+  .updateTask__storyContainer {
+    color: #f5f9eb;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: -3vh;
+  }
+  
+  .updateTask__title {
+    color: #f5f9eb;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 1.75vh;
+    font-size: 1.15vw;
+  }
+  
+  .updateTask__input {
+    background: #1f2430;
+    color: #f5f9eb;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;
+    padding: 1vh 0.5vw;
+    outline: none;
+    height: 8vh;
+    width: 95%;
+    border-radius: 1vh;
+    border: 0.1vh solid #5bc0eb;
+    margin-bottom: 1.5vh;
+    overflow: hidden;
+    margin-top: 1.5vh;
+    font-weight: 500;
+  }
+  
+  .updateTask__secondSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5vh;
+  }
+  
+  .updateTask__SprintContainer {
+    margin-right: 2.5vw;
+  }
+  
+  .updateTask__points {
+    background: #1f2430;
+    color: #f5f9eb;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;
+    padding: 0.5vh 0.5vw;
+    outline: none;
+    height: 3.5vh;
+    width: 15%;
+    border-radius: 1vh;
+    border: 0.1vh solid #5bc0eb;
+    margin-bottom: 0vh;
+    margin-top: 1.5vh;
+    font-weight: 500;
+  }
+  
+  .updateTask__buttonContainer {
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
