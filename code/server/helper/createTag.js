@@ -81,7 +81,7 @@ const setup = (txt) => {
     remove_duplicates: true,
   });
 
-  //console.log(extracted_result);
+  //console.log('From the new package: ', extracted_result);
 
   let final_keys = [];
   extracted_result.forEach((x) => {
@@ -95,16 +95,19 @@ const setup = (txt) => {
   final_keys.sort(compare);
 
   final_tags = [];
+
   for (var i = 0; i < final_keys.length; i++) {
     var key = final_keys[i];
     if (counts[key].tfidf > 0) {
       final_tags.push({ word: key, score: counts[key].tfidf });
     }
   }
+
+  /*final_tags.forEach((tag) => {
+    console.log(tag.word + ' ' + tag.word.length);
+  });*/
+  console.log(final_tags);
   return final_tags;
 };
 
 module.exports = { setup };
-
-//console.log('COUNTS', counts);
-//console.log('KEYS', keys);

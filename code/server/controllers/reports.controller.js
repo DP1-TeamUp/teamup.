@@ -67,6 +67,7 @@ const getAllReports = async (req, res) => {
   let sprintSummary = [];
   let totalVelocity = 0;
   let totalStories = 0;
+  let sprintCount = 1;
   project.sprints.forEach((sprint) => {
     let summary;
     let sprintName = `Sprint ${sprint.sprintNo}`;
@@ -75,16 +76,17 @@ const getAllReports = async (req, res) => {
     let stories =
       sprint.pending.length + sprint.ongoing.length + sprint.completed.length;
     totalStories = totalStories + stories;
-    let meanVelocity = totalVelocity / sprint.sprintNo;
-    let meanStories = totalStories / sprint.sprintNo;
+    let meanVelocity = totalVelocity / sprintCount;
+    let meanStories = totalStories / sprintCount;
     summary = {
       name: sprintName,
       velocity: velocity,
       stories: stories,
-      meanVelocity: meanVelocity,
-      meanStory: meanStories,
+      meanVelocity: meanVelocity.toLocaleString().substring(0, 5),
+      meanStory: meanStories.toLocaleString().substring(0, 4),
     };
     sprintSummary.push(summary);
+    sprintCount = sprintCount + 1;
   });
 
   return res.status(504).json({

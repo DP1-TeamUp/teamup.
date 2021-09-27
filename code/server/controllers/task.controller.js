@@ -7,6 +7,8 @@ const transporter = require('../helper/nodemailer');
 const mongoose = require('mongoose');
 const Board = require('../models/board.model');
 const { setup } = require('../helper/createTag');
+const { ldaTagCreation, ldaTagSummarizer } = require('../helper/ldaTag');
+const { matchWithoutSuffix } = require('../helper/StringMatch');
 
 const create = async (req, res) => {
   let task = new Task(req.body);
@@ -165,9 +167,12 @@ const create = async (req, res) => {
       willSendThis.push(oneTask);
     }
   });
+
+  //let ldaTags = ldaTagCreation(willSendThis);
   let final_tags = setup(willSendThis);
 
   try {
+    // user.lda = ldaTags;
     user.tags = final_tags;
     await user.save();
   } catch (error) {
@@ -199,10 +204,27 @@ const listAllTasksByProjectId = async (req, res) => {
       message: 'Something went wrong getting tasks',
     });
   }
+
+  let total = tasks.length;
+  let completed = 0;
+  tasks.forEach((task) => {
+    if (task.status === 'completed') {
+      completed = completed + 1;
+    }
+  });
+  let pending;
+  pending = total - completed;
+  let percentage = (completed / total) * 100;
+  console.log(percentage);
+  console.log(pending);
+  console.log(completed);
   return res.status(201).json({
     success: true,
     message: 'Story retrieved',
     tasks,
+    pending: pending,
+    completed: completed,
+    percentage,
   });
 };
 
@@ -526,25 +548,45 @@ const taskSuggester = async (req, res) => {
   };
 
   let taskInArray = arrayOfTheTask(task);
-  //console.log(' ');
+  console.log(taskInArray);
+  console.log(' ');
 
-  console.log('Task to be assigned: ' + task);
+  taskInArray.forEach((task) => {
+    console.log(task);
+  });
+  /*allUsers.forEach((user) => {
+    ldaTagSummarizer(user.lda, taskInArray, user.username);
+  });*/
+
+  //console.log('Task to be assigned: ' + task);
 
   allUsers.forEach((user) => {
     let score = 0;
     let nickname = user.username;
-    //console.log(' ');
+    console.log(' ');
     user.tags.forEach((tag) => {
       taskInArray.forEach((word) => {
         if (word === tag.word) {
           score = score + tag.score;
-          /*console.log(
+          console.log(
             nickname +
               ' has knows the word "' +
               tag.word +
               '" with score ' +
               tag.score
-          );*/
+          );
+        } else if (matchWithoutSuffix(tag.word, word)) {
+          score = score + tag.score;
+          console.log(
+            nickname +
+              ' has knows the word "' +
+              tag.word +
+              '" with score ' +
+              tag.score +
+              ' after suffix removal of "' +
+              word +
+              '"'
+          );
         }
       });
     });
