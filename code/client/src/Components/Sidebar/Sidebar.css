@@ -1,7 +1,7 @@
 .sidebar {
   height: 90vh;
   width: 18vw;
-  background-color: #121212;
+  background-color: #101522;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,7 +10,7 @@
 .sidebar__container {
   height: 72vh;
   width: 100%;
-  background-color: #252525;
+  background-color: #1f2430;
   margin-top: 6vh;
   border-radius: 0vh 2.5vh 2.5vh 0vh;
   display: flex;
@@ -19,18 +19,20 @@
 }
 
 .sidebar__tab {
-  color: #5f5f5f;
+  color: #62656c;
   cursor: pointer;
   display: flex;
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   align-items: center;
-  margin: 3vh 0vh;
+  margin: 2.25vh 0vh;
   text-decoration: none;
   transition: 0.2s ease-in-out;
+  font-weight: 500;
+  font-family: 'Montserrat';
 }
 
 .sidebar__tab:hover {
-  color: #ff8c42;
+  color: #5bc0eb;
 }
 
 .sidebar__tabIcon {
