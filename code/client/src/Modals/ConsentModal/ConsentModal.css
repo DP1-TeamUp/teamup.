@@ -1,0 +1,39 @@
+.consentModal {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(13, 13, 13, 0.7);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .consentModal__container {
+    background-color: #1f2430;
+    padding: 4vh 1.5vw;
+    border-radius: 1.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 30vw;
+  }
+  
+  .consentModal__text {
+    color: #f5f9e9;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5vw;
+    margin-bottom: 5vh;
+    text-align: center;
+  }
+  
+  .consentModal__actionButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    width: 30vw;
+  }
+  
