@@ -1,16 +1,16 @@
 .navbar {
   height: 9.8vh;
   position: sticky;
-  background-color: #121212;
-  border-bottom: 0.2vh solid #ff8c42;
+  background-color: #101522;
+  border-bottom: 0.2vh solid #5bc0eb;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .navbar__logo {
-  color: #ff8c42;
-  font-family: 'Righteous';
+  color: #5bc0eb;
+  font-family: "Righteous";
   margin-left: 2vw;
   font-size: 4vh;
   cursor: pointer;
@@ -24,7 +24,7 @@
 }
 
 .navbar__icon {
-  color: #5f5f5f;
+  color: #62656c;
   margin-left: 3vw;
   margin-right: 3vw;
   cursor: pointer;
@@ -34,7 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 0.2vh solid #ff8c42;
+  border: 0.2vh solid #5bc0eb;
   min-width: 6.5vw;
   padding: 0.5vh;
   border-radius: 5vh;

@@ -29,7 +29,7 @@ const Sidebar = () => {
       <div className='sidebar__container'>
         <NavLink
           to={`/dashboard/${projectID}`}
-          activeStyle={{ color: '#ff8c42' }}
+          activeStyle={{ color: '#5bc0eb' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>
             <DashboardIcon />
@@ -38,7 +38,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink
           to={`/taskboard/${projectID}`}
-          activeStyle={{ color: '#ff8c42' }}
+          activeStyle={{ color: '#5bc0eb' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>
             <LibraryBooksIcon />
@@ -47,7 +47,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink
           to={sprintRoute}
-          activeStyle={{ color: '#ff8c42' }}
+          activeStyle={{ color: '#5bc0eb' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>
             <NoteIcon />
@@ -56,7 +56,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink
           to={collabboardRoute}
-          activeStyle={{ color: '#ff8c42' }}
+          activeStyle={{ color: '#5bc0eb' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>
             <BrushIcon />
@@ -65,7 +65,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink
           to={`/reports/${projectID}`}
-          activeStyle={{ color: '#ff8c42' }}
+          activeStyle={{ color: '#5bc0eb' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>
             <InsertChartIcon />
@@ -74,7 +74,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink
           to={`/team/${projectID}`}
-          activeStyle={{ color: '#ff8c42' }}
+          activeStyle={{ color: '#5bc0eb' }}
           className='sidebar__tab'>
           <div className='sidebar__tabIcon'>
             <GroupIcon />

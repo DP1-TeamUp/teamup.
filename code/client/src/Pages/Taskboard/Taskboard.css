@@ -2,7 +2,7 @@
 .taskboard {
   height: 86vh;
   width: 85vw;
-  background: #121212;
+  background: #101522;
   padding-left: 1.8vw;
   padding-top: 4vh;
 }
@@ -13,16 +13,23 @@
 }
 
 .taskboard__content {
-  background-color: #121212;
-  height: 71.5vh;
+  background-color: #101522;
+  height: 74vh;
   width: 79vw;
-  overflow-x: scroll;
+  overflow-x: overlay;
   overflow-y: hidden;
   white-space: nowrap;
 }
 
 .taskboard__content::-webkit-scrollbar {
-  display: none;
+  height: 12px;
+}
+.taskboard__content::-webkit-scrollbar-track {
+  background: #101522;
+}
+.taskboard__content::-webkit-scrollbar-thumb {
+  background: #5bc0eb;
+  border-radius: 2.5vh;
 }
 
 .taskboard__taskBoard {
@@ -62,7 +69,7 @@
 }
 
 .taskboard__header {
-  color: #121212;
+  color: #101522;
   padding-left: 1vw;
   padding-right: 1vw;
   font-family: 'Montserrat';
@@ -99,7 +106,7 @@
 .taskboard__taskList {
   height: 90%;
   width: 100%;
-  background-color: #252525;
+  background-color: #1f2430;
   border-radius: 0vh 0vh 2.5vh 2.5vh;
-  padding-top: 1vw;
+  padding-top: 0.5vw;
 }

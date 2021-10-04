@@ -1,7 +1,7 @@
 .team {
   height: 86vh;
   width: 85vw;
-  background: #121212;
+  background: #101522;
   padding-left: 1.8vw;
   padding-top: 4vh;
   overflow: hidden;
@@ -13,7 +13,7 @@
 }
 
 .team__content {
-  background-color: #121212;
+  background-color: #101522;
   height: 72vh;
   width: 79vw;
   display: flex;
@@ -22,7 +22,7 @@
 }
 
 .team__contentLeft {
-  background-color: #121212;
+  background-color: #101522;
   width: 75%;
   height: 100%;
   display: flex;
@@ -32,30 +32,43 @@
 }
 
 .team__projectOwner {
-  background-color: #252525;
+  background-color: #1f2430;
   height: 21%;
   width: 100%;
   border-radius: 2.5vh;
   color: #f2f2f2;
+  padding-right: 0vw;
 }
 
 .team__projectOwnerName {
   display: flex;
   align-items: center;
-  font-size: 1.3vw;
+  font-size: 1.1vw;
   margin-left: 1vw;
+  margin-right: 1vw;
   margin-top: 0.5vh;
   cursor: pointer;
+  border-radius: 0.5vw;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.team__projectOwnerName:hover {
+  background: #62656c;
 }
 
 .team__collaborators {
-  background-color: #252525;
+  background-color: #1f2430;
   height: 74%;
   width: 100%;
   border-radius: 2.5vh;
-  color: #f2f2f2;
+  color: #f5f9e9;
   transform: translateY(110%);
   -webkit-transform: translateY(110%);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .team__header {
@@ -91,38 +104,54 @@
   cursor: pointer;
   transition: 0.2s ease-in-out;
   width: 98%;
-  font-size: 1.2vw;
+  font-size: 1vw;
   border-radius: 0.5vw;
 }
 
 .team__buttondrop {
-  border: 1px solid #ff8c42;
+  border: 1px solid #5bc0eb;
   border-radius: 1.5vh;
   padding-top: 0.5vh;
   padding-bottom: 0.5vh;
-  width: 11vw;
+  padding-left: 0.5vw;
+  cursor: pointer;
+  width: 12vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  color: #f2f2f2;
+  color: #f5f9e9;
   font-size: 2vh;
-  height: 3vh;
+  height: 4.235vh;
+  outline: none;
+  background-color: #1f2430;
 }
 
 .team__buttondropText {
   margin-left: 1vh;
 }
 
-.team__icon {
-  color: #ff8c42;
+.team__role {
+  border: 1px solid #5bc0eb;
+  border-radius: 1.5vh;
+  padding-top: 0.5vh;
+  padding-bottom: 0.5vh;
+  cursor: pointer;
+  width: 12vw;
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-right: 1vh;
+  align-items: center;
+  color: #f2f2f2;
+  font-size: 2vh;
+  height: 3vh;
+  outline: none;
+  background-color: #252525;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9vw;
+  font-weight: 500;
 }
 
 .team__member:hover {
-  background: #525252;
+  background: #62656c;
 }
 
 .team__profileGroup {
@@ -147,7 +176,7 @@
 }
 
 .team__contentRight {
-  background-color: #252525;
+  background-color: #1f2430;
   height: 100%;
   width: 22.5%;
   border-radius: 2.5vh;
@@ -161,6 +190,69 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #5f5f5f;
+  color: #62656c;
   font-size: 1.1vw;
+}
+
+.team__selectedMember {
+  display: flex;
+  align-items: center;
+  color: #f5f9e9;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-top: 6vh;
+}
+
+.team__selectedName {
+  margin-top: 2.5vh;
+  color: #f5f9e9;
+  font-size: 1.4vw;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 2vh;
+}
+
+.team__selectedInfo {
+  width: 100%;
+  padding-left: 2vw;
+}
+
+.team__selectedTitle {
+  margin-top: 3vh;
+  margin-bottom: 1.5vh;
+  color: #5bc0eb;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95vw;
+}
+
+.team__selectedData {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  color: #f2f2f2;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95vw;
+}
+
+.team__selectedButton {
+  color: #121212;
+  background-color: #fa5959;
+  padding: 0.5vh 1vw 0.5vh 1vw;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9vw;
+  width: 5vw;
+  margin-top: 2.5vh;
+  border-radius: 1.25vh;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 0.01vh solid #fa5959;
+}
+
+.team__selectedButton:hover {
+  background-color: #252525;
+  color: #fa5959;
+  border: 0.01vh solid #fa5959;
 }
