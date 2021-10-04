@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const Board = require('../models/board.model');
 const { setup } = require('../helper/createTag');
 const { ldaTagCreation, ldaTagSummarizer } = require('../helper/ldaTag');
-const { matchWithoutSuffix } = require('../helper/StringMatch');
+const { matchWithoutSuffix, checkStopWords } = require('../helper/StringMatch');
 
 const create = async (req, res) => {
   let task = new Task(req.body);
@@ -215,9 +215,6 @@ const listAllTasksByProjectId = async (req, res) => {
   let pending;
   pending = total - completed;
   let percentage = (completed / total) * 100;
-  console.log(percentage);
-  console.log(pending);
-  console.log(completed);
   return res.status(201).json({
     success: true,
     message: 'Story retrieved',
@@ -547,18 +544,20 @@ const taskSuggester = async (req, res) => {
     return task.trim().split(' ');
   };
 
-  let taskInArray = arrayOfTheTask(task);
-  console.log(taskInArray);
+  let unfilteredTask = arrayOfTheTask(task);
+  /*console.log(taskInArray);
   console.log(' ');
 
   taskInArray.forEach((task) => {
     console.log(task);
-  });
+  });*/
   /*allUsers.forEach((user) => {
     ldaTagSummarizer(user.lda, taskInArray, user.username);
   });*/
 
   //console.log('Task to be assigned: ' + task);
+
+  let taskInArray = checkStopWords(unfilteredTask);
 
   allUsers.forEach((user) => {
     let score = 0;
@@ -576,16 +575,17 @@ const taskSuggester = async (req, res) => {
               tag.score
           );
         } else if (matchWithoutSuffix(tag.word, word)) {
-          score = score + tag.score;
+          score = score + tag.score * 0.6;
           console.log(
             nickname +
               ' has knows the word "' +
               tag.word +
               '" with score ' +
               tag.score +
-              ' after suffix removal of "' +
+              ' after suffix work done to "' +
               word +
-              '"'
+              '" scored changed to: ' +
+              tag.score * 0.6
           );
         }
       });

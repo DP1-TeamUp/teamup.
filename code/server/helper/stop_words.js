@@ -1,4 +1,4 @@
-var stopword = [
+var stopwords = [
   'a',
   'able',
   'about',
@@ -508,3 +508,5 @@ var stopword = [
   'yourselves',
   'zero',
 ];
+
+module.exports = { stopwords };

@@ -1,4 +1,5 @@
 const keyword_extractor = require('keyword-extractor');
+const { checkStopWords } = require('./StringMatch');
 
 const formula =
   'no. of times it appearead in a doc * (total no of docments/documens it appeared)';
@@ -103,11 +104,32 @@ const setup = (txt) => {
     }
   }
 
-  /*final_tags.forEach((tag) => {
-    console.log(tag.word + ' ' + tag.word.length);
-  });*/
-  console.log(final_tags);
-  return final_tags;
+  //stop words filtering
+  let toBefilteredByStopWords = [];
+  let filteredWords = [];
+
+  final_tags.forEach((tag) => {
+    toBefilteredByStopWords.push(tag.word);
+  });
+
+  filteredWords = checkStopWords(toBefilteredByStopWords);
+
+  console.log(filteredWords.length);
+  console.log(final_tags.length);
+
+  let finalTagsWithStopWordFiltration = [];
+
+  final_tags.forEach((tag) => {
+    filteredWords.forEach((word) => {
+      if (word === tag.word) {
+        finalTagsWithStopWordFiltration.push(tag);
+      }
+    });
+  });
+
+  console.log(finalTagsWithStopWordFiltration);
+
+  return finalTagsWithStopWordFiltration;
 };
 
 module.exports = { setup };
