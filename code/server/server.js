@@ -22,12 +22,12 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection Error:'));
 
 db.once('open', () => {
-  console.log('Database connected after change');
+  console.log('Database connected');
 
   const activesMembers = db.collection('actives');
   const changeStreamActive = activesMembers.watch();
   changeStreamActive.on('change', (change) => {
-    console.log('A change occured in members', change);
+    //console.log('A change occured in members', change);
 
     if (change.operationType === 'insert') {
       const activeDetails = change.fullDocument;
@@ -37,6 +37,31 @@ db.once('open', () => {
     } else if (change.operationType === 'delete') {
       pusher.trigger('actives', 'deleted', {
         message: 'delete',
+      });
+    } else {
+      console.log('Error trigerring Pusher');
+    }
+  });
+
+  const pitchers = db.collection('pitchers');
+  const changeStreamPitchers = pitchers.watch();
+  changeStreamPitchers.on('change', (change) => {
+    if (
+      change.operationType === 'insert' ||
+      change.operationType === 'delete'
+    ) {
+      const activeDetails = change.fullDocument;
+      pusher.trigger('pitchers', 'please', {
+        message: activeDetails,
+      });
+    } else if (change.operationType === 'update') {
+      let data = {
+        identity: change.documentKey,
+        x: change.updateDescription.updatedFields.x,
+        y: change.updateDescription.updatedFields.y,
+      };
+      pusher.trigger('pitchers', 'pitcherUpdate', {
+        message: data,
       });
     } else {
       console.log('Error trigerring Pusher');

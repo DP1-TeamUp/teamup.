@@ -13,6 +13,7 @@ const taskRoutes = require('./routes/task.routes');
 const activeRoutes = require('./routes/active.routes');
 const sprintRoutes = require('./routes/sprint.routes');
 const reportsRoutes = require('./routes/reports.routes');
+const pitcherRoutes = require('./routes/pitcher.routes');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/', taskRoutes);
 app.use('/', activeRoutes);
 app.use('/', sprintRoutes);
 app.use('/', reportsRoutes);
+app.use('/', pitcherRoutes);
 
 app.use((err, req, res, next) => {
   console.log(err);
