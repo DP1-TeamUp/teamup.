@@ -98,11 +98,11 @@ const deletePitcher = async (req, res) => {
 const deleteAllPitchers = async (req, res) => {
   let pitchers;
   try {
-    pitchers = await Pitcher.find({
+    await Pitcher.deleteMany({
       projectId: ObjectId(req.params.projectId),
     });
-    await pitchers.remove();
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ success: false, message: 'Something went wrong' });
