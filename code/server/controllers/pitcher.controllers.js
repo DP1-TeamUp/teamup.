@@ -80,9 +80,43 @@ const createImagePitchers = async (req, res) => {
   }
 };
 
+const deletePitcher = async (req, res) => {
+  let pitcher;
+  try {
+    pitcher = await Pitcher.findById(req.body._id);
+    await pitcher.remove();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: 'Something went wrong' });
+  }
+  return res
+    .status(500)
+    .json({ success: true, message: 'Successfully deleted' });
+};
+
+const deleteAllPitchers = async (req, res) => {
+  let pitchers;
+  try {
+    pitchers = await Pitcher.find({
+      projectId: ObjectId(req.params.projectId),
+    });
+    await pitchers.remove();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: 'Something went wrong' });
+  }
+  return res
+    .status(500)
+    .json({ success: true, message: 'Successfully deleted' });
+};
+
 module.exports = {
   createTextPitcher,
   getPitchers,
   updatePitchers,
   createImagePitchers,
+  deletePitcher,
+  deleteAllPitchers,
 };

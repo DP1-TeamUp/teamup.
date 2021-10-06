@@ -4,7 +4,10 @@ const fileUpload = require('../middlewares/file-upload');
 
 const router = express.Router();
 
-router.route('/api/pitchers').put(pitcherController.updatePitchers);
+router
+  .route('/api/pitchers')
+  .put(pitcherController.updatePitchers)
+  .delete(pitcherController.deletePitcher);
 router.route('/api/pitchers/text').post(pitcherController.createTextPitcher);
 router
   .route('/api/pitchers/image')
