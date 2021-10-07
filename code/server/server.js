@@ -74,7 +74,7 @@ db.once('open', () => {
   const allUsers = db.collection('users');
   const changeStreamUsers = allUsers.watch();
   changeStreamUsers.on('change', (change) => {
-    console.log('A change occured in members', change);
+    //console.log('A change occured in members', change);
     if (change.operationType === 'update') {
       let data = change.updateDescription.updatedFields;
       pusher.trigger('notifications', 'notificationUpdate', {

@@ -305,6 +305,29 @@ const getNotifications = async (req, res) => {
   });
 };
 
+const deleteNotifications = async (req, res) => {
+  let user;
+  try {
+    user = await User.findById(req.params.uid);
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+  user.notifications = [];
+  try {
+    await user.save();
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+};
+
 module.exports = {
   create,
   userByID,
@@ -317,4 +340,5 @@ module.exports = {
   addSkills,
   deleteSkill,
   getNotifications,
+  deleteNotifications,
 };
