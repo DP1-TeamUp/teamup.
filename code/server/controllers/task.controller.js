@@ -81,12 +81,20 @@ const create = async (req, res) => {
     });
   }
 
+  let notification = {
+    project: project.name,
+    subject: 'New Task Assigned on Epic ' + board.name,
+    content: req.body.story,
+  };
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await task.save({ session: sess });
     board.task.push(task._id);
     await board.save({ session: sess });
+    user.notifications.push(notification);
+    await user.save;
     await sess.commitTransaction();
   } catch (error) {
     console.log(error);

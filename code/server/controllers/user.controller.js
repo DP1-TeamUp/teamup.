@@ -288,6 +288,23 @@ const deleteSkill = async (req, res) => {
   }
 };
 
+const getNotifications = async (req, res) => {
+  let user;
+  try {
+    user = await User.findById(req.params.uid);
+  } catch (error) {
+    console.log(error);
+    return res.status(504).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+  return res.status(200).json({
+    success: true,
+    notifications: user.notifications,
+  });
+};
+
 module.exports = {
   create,
   userByID,
@@ -299,4 +316,5 @@ module.exports = {
   resetPassword,
   addSkills,
   deleteSkill,
+  getNotifications,
 };

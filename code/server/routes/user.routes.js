@@ -5,6 +5,8 @@ const fileUpload = require('../middlewares/file-upload');
 
 const router = express.Router();
 
+router.route('/api/notifications/:uid').get(userControl.getNotifications);
+
 router.route('/api/users').get(userControl.list).post(userControl.create);
 
 router

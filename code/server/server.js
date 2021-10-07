@@ -24,6 +24,7 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 db.once('open', () => {
   console.log('Database connected');
 
+  //----------------------------------------------------------------For Actives Members-----------------
   const activesMembers = db.collection('actives');
   const changeStreamActive = activesMembers.watch();
   changeStreamActive.on('change', (change) => {
@@ -43,6 +44,7 @@ db.once('open', () => {
     }
   });
 
+  //----------------------------------------------------------------For Pitchers----------------
   const pitchers = db.collection('pitchers');
   const changeStreamPitchers = pitchers.watch();
   changeStreamPitchers.on('change', (change) => {
@@ -61,6 +63,21 @@ db.once('open', () => {
         y: change.updateDescription.updatedFields.y,
       };
       pusher.trigger('pitchers', 'pitcherUpdate', {
+        message: data,
+      });
+    } else {
+      console.log('Error trigerring Pusher');
+    }
+  });
+
+  //---------------------------------------------------------------For User Notifications------------
+  const allUsers = db.collection('users');
+  const changeStreamUsers = allUsers.watch();
+  changeStreamUsers.on('change', (change) => {
+    console.log('A change occured in members', change);
+    if (change.operationType === 'update') {
+      let data = change.updateDescription.updatedFields;
+      pusher.trigger('notifications', 'notificationUpdate', {
         message: data,
       });
     } else {

@@ -114,8 +114,8 @@ const setup = (txt) => {
 
   filteredWords = checkStopWords(toBefilteredByStopWords);
 
-  console.log(filteredWords.length);
-  console.log(final_tags.length);
+  //console.log(filteredWords.length);
+  //console.log(final_tags.length);
 
   let finalTagsWithStopWordFiltration = [];
 
@@ -127,7 +127,7 @@ const setup = (txt) => {
     });
   });
 
-  console.log(finalTagsWithStopWordFiltration);
+  //console.log(finalTagsWithStopWordFiltration);
 
   return finalTagsWithStopWordFiltration;
 };
