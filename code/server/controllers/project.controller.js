@@ -397,6 +397,7 @@ const changeDesignation = async (req, res) => {
   }
 
   let newDesignation = req.body.newDesignation;
+  let notification;
   try {
     //pull out fro previous designation
     if (currentDesignation === 'intern') {
@@ -412,14 +413,34 @@ const changeDesignation = async (req, res) => {
     //push into new designation
     if (newDesignation === 'intern') {
       project.intern.push(req.body.memberId);
+      notification = {
+        project: project.name,
+        subject: 'Your role has been changed to intern for this project.',
+      };
     }
     if (newDesignation === 'sr') {
       project.srDev.push(req.body.memberId);
+      notification = {
+        project: project.name,
+        subject:
+          'Your role has been changed to Software Developer for this project.',
+      };
     }
     if (newDesignation === 'jr') {
       project.jrDev.push(req.body.memberId);
+      notification = {
+        project: project.name,
+        subject:
+          'Your role has been changed to Junior Developer for this project.',
+      };
     }
-    await project.save();
+    user.notifications.push(notification);
+
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await project.save({ session: sess });
+    await user.save({ session: sess });
+    await sess.commitTransaction();
     return res.status(200).json({
       success: true,
       message: 'Designation changed successfully',

@@ -94,7 +94,7 @@ const create = async (req, res) => {
     board.task.push(task._id);
     await board.save({ session: sess });
     user.notifications.push(notification);
-    await user.save;
+    await user.save({ session: sess });
     await sess.commitTransaction();
   } catch (error) {
     console.log(error);
@@ -300,6 +300,78 @@ const updateTaskFromEpic = async (req, res) => {
     }
   }
 
+  let user1;
+  try {
+    user1 = await User.findById(task.assignedTo);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  let user2;
+  try {
+    user2 = await User.findById(req.body.assignedTo);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  let project;
+  try {
+    project = await Project.findById(task.projectId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  let board;
+  try {
+    board = await Board.findById(task.boardId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong with the related epic ',
+    });
+  }
+
+  let notification = {
+    project: project.name,
+    subject: 'Your Task from Epic "' + board.name + '" is updated.',
+    content: task.story,
+  };
+
+  let notification1 = {
+    project: project.name,
+    subject:
+      'Your Task from Epic "' +
+      board.name +
+      '" is reassigned to your colleague.',
+    content: task.story,
+  };
+
+  let notification2 = {
+    project: project.name,
+    subject: 'A Task from Epic "' + board.name + '" is assigned to you.',
+    content: task.story,
+  };
+
+  if (req.body.assignedTo == task.assignedTo) {
+    user1.notifications.push(notification);
+  } else {
+    user1.notifications.push(notification1);
+    user2.notifications.push(notification2);
+  }
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -329,9 +401,12 @@ const updateTaskFromEpic = async (req, res) => {
         await alreadyAssignedSprint.save({ session: sess });
       }
     }
+
     task.assignedTo = req.body.assignedTo;
     task.story = req.body.story;
     task.points = req.body.points;
+    await user1.save({ session: sess });
+    await user2.save({ session: sess });
     await task.save({ session: sess });
     await sess.commitTransaction();
 
@@ -463,6 +538,31 @@ const deleteTask = async (req, res) => {
     });
   }
 
+  let user;
+  try {
+    user = await User.findById(task.assignedTo);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  let project;
+  try {
+    project = await Project.findById(task.projectId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  console.log(user.username);
+  console.log(project.name);
+
   if (task.status === 'completed') {
     return res.status(404).json({
       success: false,
@@ -501,6 +601,12 @@ const deleteTask = async (req, res) => {
     });
   }
 
+  let notification = {
+    project: project.name,
+    subject: 'Your task has been removed from ' + board.name,
+    content: task.story,
+  };
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -515,7 +621,9 @@ const deleteTask = async (req, res) => {
       sprint.velocity = sprint.velocity - task.points;
       await sprint.save({ session: sess });
     }
+    user.notifications.push(notification);
     board.task.pull(taskId);
+    await user.save({ session: sess });
     await board.save({ session: sess });
     await task.remove({ session: sess });
     await sess.commitTransaction();
