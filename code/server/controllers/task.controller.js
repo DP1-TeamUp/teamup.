@@ -333,6 +333,20 @@ const updateTaskFromEpic = async (req, res) => {
     });
   }
 
+  //=========Auth here===========
+
+  let authMember = project.members.filter(
+    (pmember) => pmember === req.auth._id
+  );
+  if (authMember) {
+    console.log('auth successfull');
+  } else {
+    return res.status(500).json({
+      success: false,
+      message: 'Your are not authorized in this project',
+    });
+  }
+
   let board;
   try {
     board = await Board.findById(task.boardId);
@@ -562,6 +576,19 @@ const deleteTask = async (req, res) => {
 
   console.log(user.username);
   console.log(project.name);
+
+  //=====Auth here=====
+
+  let authMember = project.members.filter(
+    (pmember) => pmember === req.auth._id
+  );
+  if (authMember) {
+  } else {
+    return res.status(500).json({
+      success: false,
+      message: 'Your are not authorized in this project',
+    });
+  }
 
   if (task.status === 'completed') {
     return res.status(404).json({

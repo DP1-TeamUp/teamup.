@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Project = require('../models/project.model');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const config = require('../../config/config');
@@ -67,4 +68,33 @@ const hasAuthorization = (req, res, next) => {
   next();
 };
 
-module.exports = { signin, signout, requireSignin, hasAuthorization };
+const isAMember = async (req, res, next) => {
+  let project;
+  let projectId = req.params.projectId || req.body.projectId;
+  try {
+    project = await Project.findById(projectId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+  let member = project.members.filter((pmember) => pmember === req.auth._id);
+  if (member) {
+    next();
+  } else {
+    return res.status(500).json({
+      success: false,
+      message: 'Your are not authorized in this project',
+    });
+  }
+};
+
+module.exports = {
+  signin,
+  signout,
+  requireSignin,
+  hasAuthorization,
+  isAMember,
+};
