@@ -28,9 +28,13 @@ io.on('connection', (socket) => {
     } else {
       users[roomID] = [socket.id];
     }
+
+    console.log('you joined the room', users);
+
     socketToRoom[socket.id] = roomID;
     const usersInThisRoom = users[roomID].filter((id) => id !== socket.id);
 
+    console.log('users in this room', usersInThisRoom);
     socket.emit('all users', usersInThisRoom);
   });
 
@@ -48,7 +52,7 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('disconnect', () => {
+  socket.on('disconnectChat', () => {
     const roomID = socketToRoom[socket.id];
     console.log(roomID);
     let room = users[roomID];
@@ -58,7 +62,22 @@ io.on('connection', (socket) => {
     }
 
     const usersInThisRoom = users[roomID];
+    console.log('disconnect', usersInThisRoom);
+
     socket.emit('all users', usersInThisRoom);
+  });
+
+  socket.on('disconnectChatfromButton', () => {
+    const roomID = socketToRoom[socket.id];
+    console.log(roomID);
+    let room = users[roomID];
+    if (room) {
+      room = room.filter((id) => id !== socket.id);
+      users[roomID] = room;
+    }
+
+    const usersInThisRoom = users[roomID];
+    console.log('disconnect', usersInThisRoom);
   });
 });
 
