@@ -80,7 +80,14 @@ const isAMember = async (req, res, next) => {
       message: 'Something went wrong please try again',
     });
   }
-  let member = project.members.filter((pmember) => pmember === req.auth._id);
+  let member;
+
+  project.members.forEach((employee) => {
+    if (employee == req.auth._id) {
+      member = req.auth._id;
+    }
+  });
+
   if (member) {
     next();
   } else {
@@ -91,10 +98,36 @@ const isAMember = async (req, res, next) => {
   }
 };
 
+const isTeamLead = async (req, res, next) => {
+  let project;
+  let projectId = req.params.projectId || req.body.projectId;
+  try {
+    project = await Project.findById(projectId);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: 'Something went wrong please try again',
+    });
+  }
+
+  if (project.admin == req.auth._id) {
+    next();
+  } else if (req.body.memberId == req.auth._id) {
+    next();
+  } else {
+    return res.status(500).json({
+      success: false,
+      message: 'Your are not authorized for this action',
+    });
+  }
+};
+
 module.exports = {
   signin,
   signout,
   requireSignin,
   hasAuthorization,
   isAMember,
+  isTeamLead,
 };

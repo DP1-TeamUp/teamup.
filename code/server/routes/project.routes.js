@@ -1,5 +1,6 @@
 const express = require('express');
 const projectController = require('../controllers/project.controller');
+const authControl = require('../controllers/auth.controller');
 
 const router = express.Router();
 
@@ -18,9 +19,17 @@ router
 
 router
   .route('/api/projects/members/:projectId')
-  .put(projectController.addMemberToProject)
+  .put(
+    authControl.requireSignin,
+    authControl.isTeamLead,
+    projectController.addMemberToProject
+  )
   .get(projectController.listOfAllMembersByProjectId)
-  .delete(projectController.removeMemberFromProject);
+  .delete(
+    authControl.requireSignin,
+    authControl.isTeamLead,
+    projectController.removeMemberFromProject
+  );
 
 router
   .route('/api/projects/sprints/:projectId')

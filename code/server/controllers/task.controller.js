@@ -335,9 +335,14 @@ const updateTaskFromEpic = async (req, res) => {
 
   //=========Auth here===========
 
-  let authMember = project.members.filter(
-    (pmember) => pmember === req.auth._id
-  );
+  let authMember;
+
+  project.members.forEach((employee) => {
+    if (employee == req.auth._id) {
+      authMember = req.auth._id;
+    }
+  });
+
   if (authMember) {
     console.log('auth successfull');
   } else {
@@ -579,9 +584,14 @@ const deleteTask = async (req, res) => {
 
   //=====Auth here=====
 
-  let authMember = project.members.filter(
-    (pmember) => pmember === req.auth._id
-  );
+  let authMember;
+
+  project.members.forEach((employee) => {
+    if (employee == req.auth._id) {
+      authMember = req.auth._id;
+    }
+  });
+
   if (authMember) {
   } else {
     return res.status(500).json({
