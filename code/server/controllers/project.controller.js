@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Project = require('../models/project.model');
 const User = require('../models/user.model');
 const Task = require('../models/task.model');
+const Sprint = require('../models/sprint.model');
+const { contentSecurityPolicy } = require('helmet');
 
 const create = async (req, res) => {
   let project = new Project(req.body);
@@ -234,7 +236,7 @@ const removeMemberFromProject = async (req, res) => {
 
   let project;
   try {
-    project = await Project.findById(projectId);
+    project = await Project.findById(projectId).populate('admin');
   } catch (error) {
     console.log(error);
     return res
@@ -248,7 +250,7 @@ const removeMemberFromProject = async (req, res) => {
       .json({ success: false, message: 'Project not found' });
   }
 
-  if (project.admin === req.body.memberId) {
+  if (project.admin._id === req.body.memberId) {
     return res
       .status(404)
       .json({ success: false, message: 'Admin cannot be removed' });
@@ -283,9 +285,10 @@ const removeMemberFromProject = async (req, res) => {
       .json({ success: false, message: 'Failed to remove the member' });
   }
 
-  tasks.forEach((task) => {
-    task.assignedTo = undefined;
-  });
+  let notification = {
+    project: project.name,
+    content: 'You were removed from this project',
+  };
 
   try {
     const sess = await mongoose.startSession();
@@ -296,6 +299,7 @@ const removeMemberFromProject = async (req, res) => {
       task.assignedTo = undefined;
       await task.save({ session: sess });
     });
+    user.notifications.push(notification);
     user.projects.pull(project);
     await user.save({ session: sess });
     await sess.commitTransaction();

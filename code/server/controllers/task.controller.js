@@ -387,8 +387,12 @@ const updateTaskFromEpic = async (req, res) => {
   if (req.body.assignedTo == task.assignedTo) {
     user1.notifications.push(notification);
   } else {
-    user1.notifications.push(notification1);
-    user2.notifications.push(notification2);
+    if (user1) {
+      user1.notifications.push(notification1);
+    }
+    if (user2) {
+      user2.notifications.push(notification2);
+    }
   }
 
   try {
@@ -424,8 +428,12 @@ const updateTaskFromEpic = async (req, res) => {
     task.assignedTo = req.body.assignedTo;
     task.story = req.body.story;
     task.points = req.body.points;
-    await user1.save({ session: sess });
-    await user2.save({ session: sess });
+    if (user1) {
+      await user1.save({ session: sess });
+    }
+    if (user2) {
+      await user2.save({ session: sess });
+    }
     await task.save({ session: sess });
     await sess.commitTransaction();
 
@@ -579,9 +587,6 @@ const deleteTask = async (req, res) => {
     });
   }
 
-  console.log(user.username);
-  console.log(project.name);
-
   //=====Auth here=====
 
   let authMember;
@@ -658,9 +663,11 @@ const deleteTask = async (req, res) => {
       sprint.velocity = sprint.velocity - task.points;
       await sprint.save({ session: sess });
     }
-    user.notifications.push(notification);
+    if (user) {
+      user.notifications.push(notification);
+      await user.save();
+    }
     board.task.pull(taskId);
-    await user.save({ session: sess });
     await board.save({ session: sess });
     await task.remove({ session: sess });
     await sess.commitTransaction();
@@ -714,22 +721,25 @@ const taskSuggester = async (req, res) => {
 
   allUsers.forEach((user) => {
     let score = 0;
-    let nickname = user.username;
-    console.log(' ');
+    let nickname = user.name;
+    let id = user._id;
+    let email = user.email;
+    let image = user.image;
+    //console.log(' ');
     user.tags.forEach((tag) => {
       taskInArray.forEach((word) => {
         if (word === tag.word) {
           score = score + tag.score;
-          console.log(
+          /*console.log(
             nickname +
               ' has knows the word "' +
               tag.word +
               '" with score ' +
               tag.score
-          );
+          );*/
         } else if (matchWithoutSuffix(tag.word, word)) {
           score = score + tag.score * 0.6;
-          console.log(
+          /*console.log(
             nickname +
               ' has knows the word "' +
               tag.word +
@@ -739,7 +749,7 @@ const taskSuggester = async (req, res) => {
               word +
               '" scored changed to: ' +
               tag.score * 0.6
-          );
+          );*/
         }
       });
     });
@@ -747,6 +757,9 @@ const taskSuggester = async (req, res) => {
       finalNicknames.push({
         name: nickname,
         score: score.toString().substring(0, 5),
+        _id: id,
+        email: email,
+        image: image,
       });
     }
   });

@@ -8,7 +8,9 @@ const getAllReports = async (req, res) => {
 
   let project;
   try {
-    project = await Project.findById(projectId).populate('sprints');
+    project = await Project.findById(projectId)
+      .populate('sprints')
+      .populate('members', 'username');
   } catch (error) {
     console.log(error);
     return res
@@ -54,10 +56,13 @@ const getAllReports = async (req, res) => {
   let count;
   project.members.forEach((member) => {
     count = 0;
+    name = member.username;
     tasks.forEach((task) => {
-      if (String(member) == String(task.assignedTo._id)) {
-        count++;
-        name = task.assignedTo.username;
+      if (task.assignedTo) {
+        if (String(member._id) == String(task.assignedTo._id)) {
+          count++;
+          name = task.assignedTo.username;
+        }
       }
     });
     let newWorkLoad = { subject: name, A: count };
