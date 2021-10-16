@@ -17,15 +17,22 @@
   justify-content: space-around;
   background-color: #1f2430;
   flex-direction: column;
-  min-height: 30vh;
-  min-width: 30vw;
+  min-height: 20vh;
+  min-width: 25vw;
+  max-width: 30vw;
   color: #f5f9e9;
-  padding: 2vh 2vw;
+  padding: 2vw 2vw;
   border-radius: 2.5vh;
   border: 1px solid #5bc0eb;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 1.1vw;
 }
 
 .responseModal__message {
-  margin-top: 1.5vh;
+  margin: 0 auto;
+  min-height: 10vh;
+  width: 85%;
   font-size: 1.5vw;
+  text-align: center;
 }

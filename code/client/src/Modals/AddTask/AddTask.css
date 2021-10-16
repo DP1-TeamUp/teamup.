@@ -1,110 +1,169 @@
 .addTask {
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(13, 13, 13, 0.7);
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .addTask__container {
-    min-width: 22.5vw;
-    min-height: 30vh;
-    background: #1f2430;
-    padding: 2vh 1vw 2vh 1.25vw;
-    border-radius: 1.5vh;
-  }
-  
-  .addTask__closeButton {
-    position: relative;
-    color: #62656c;
-    left: 94%;
-  
-    cursor: pointer;
-  }
-  
-  .addTask__storyContainer {
-    color: #f5f9e9;
-    font-family: 'Montserrat', sans-serif;
-    margin-top: -3vh;
-  }
-  
-  .addTask__title {
-    color: #f5f9e9;
-    font-family: 'Montserrat', sans-serif;
-    margin-top: 1.75vh;
-    font-size: 1.15vw;
-  }
-  
-  .addTask__input {
-    background: #1f2430;
-    color: #f5f9e9;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1vw;
-    padding: 0.5vh 0.5vw;
-    outline: none;
-    height: 8vh;
-    width: 95%;
-    border-radius: 1vh;
-    border: 0.1vh solid #5bc0eb;
-    margin-bottom: 1.5vh;
-    overflow: hidden;
-    margin-top: 1.5vh;
-    font-weight: 500;
-  }
-  
-  .addTask__memberContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 3vh;
-  }
-  
-  .addTask__selector {
-    cursor: pointer;
-    outline: none;
-    background-color: #1f2430;
-    border: 1px solid #5bc0eb;
-    font-size: 0.9vw;
-    color: #f5f9e9;
-    font-family: 'Montserrat', sans-serif;
-    margin-top: 1.5vh;
-    padding: 1vh 1vw 1vh 1vw;
-    border-radius: 1vh;
-  }
-  
-  .addTask__getSuggestions {
-    color: #5bc0eb;
-    font-size: 0.8vw;
-    text-decoration: underline;
-    margin-left: 1vw;
-    margin-top: 6vh;
-    cursor: pointer;
-  }
-  
-  .addTask__storyPoint {
-    background: #1f2430;
-    color: #f5f9e9;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1vw;
-    padding: 0.5vh 0.5vw;
-    outline: none;
-    height: 4vh;
-    width: 15%;
-    border-radius: 1vh;
-    border: 0.1vh solid #5bc0eb;
-    margin-bottom: 1.5vh;
-    margin-top: 1.5vh;
-    font-weight: 500;
-  }
-  
-  .addTask__button {
-    margin-top: 3vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(13, 13, 13, 0.7);
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addTask__container {
+  min-width: 22.5vw;
+  min-height: 30vh;
+  background: #1f2430;
+  padding: 2vh 1vw 2vh 1.25vw;
+  border-radius: 1.5vh;
+}
+
+.addTask__closeButton {
+  position: relative;
+  color: #62656c;
+  left: 94%;
+
+  cursor: pointer;
+}
+
+.addTask__storyContainer {
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: -3vh;
+}
+
+.addTask__title {
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 1.75vh;
+  font-size: 1.15vw;
+}
+
+.addTask__input {
+  background: #1f2430;
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1vw;
+  padding: 0.5vh 0.5vw;
+  outline: none;
+  height: 8vh;
+  width: 95%;
+  border-radius: 1vh;
+  border: 0.1vh solid #5bc0eb;
+  margin-bottom: 1.5vh;
+  overflow: hidden;
+  margin-top: 1.5vh;
+  font-weight: 500;
+}
+
+.addTask__memberContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+
+.addTask__selector {
+  cursor: pointer;
+  outline: none;
+  background-color: #1f2430;
+  border: 1px solid #5bc0eb;
+  font-size: 0.9vw;
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 1.5vh;
+  padding: 0.2vh 0.8vw 0.2vh 0.8vw;
+  border-radius: 1vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.addTask__getSuggestions {
+  color: #5bc0eb;
+  font-size: 0.8vw;
+  text-decoration: underline;
+  margin-left: 1vw;
+  margin-top: 6vh;
+  cursor: pointer;
+}
+
+.addTask__storyPoint {
+  background: #1f2430;
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1vw;
+  padding: 0.5vh 0.5vw;
+  outline: none;
+  height: 4vh;
+  width: 15%;
+  border-radius: 1vh;
+  border: 0.1vh solid #5bc0eb;
+  margin-bottom: 1.5vh;
+  margin-top: 1.5vh;
+  font-weight: 500;
+}
+
+.addTask__button {
+  margin-top: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addTask__member {
+  position: relative;
+  width: 15vw;
+}
+
+.addTask__options {
+  position: absolute;
+  top: 10;
+  right: 10;
+  max-height: 100px;
+  width: 14.8vw;
+  border: 1px solid #5bc0eb;
+  overflow-y: scroll;
+  z-index: 12;
+  background-color: #1f2430;
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 1vh;
+}
+
+.addTask__options::-webkit-scrollbar {
+  width: 6px;
+}
+.addTask__options::-webkit-scrollbar-track {
+  background: #101522;
+}
+.addTask__options::-webkit-scrollbar-thumb {
+  background: #5bc0eb;
+  border-radius: 2.5vh;
+}
+
+.addTask__option {
+  font-size: 0.9vw;
+  color: #f5f9e9;
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 1vh;
+  padding: 1vh 1vw 1vh 1vw;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.addTask__option:hover {
+  background-color: #5bc0eb;
+}
+
+.addTask__selectorIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addTask__selectorText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

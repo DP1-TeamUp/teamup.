@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './AddMember.css';
+import './VerificationCode.css';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '../../Components/Button/Button';
-import { addNewMember } from '../../API/project';
+import { emailVerification } from '../../API/auth';
+import { create } from '../../API/user';
 import { useParams } from 'react-router-dom';
 import ResponseModal from '../ResponseModal/ResponseModal';
 import Spinkit from '../Spinkit/Spinkit';
 import { isAuthenticated } from '../../API/auth-helper';
+import { useHistory } from 'react-router-dom';
 
-const AddMember = (props) => {
-  const { projectId } = useParams();
-  const [email, setEmail] = useState('');
+const VerificationCode = (props) => {
+  let history = useHistory();
+  const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [openResponse, setOpenResponse] = useState(false);
   const [message, setMessage] = useState('');
 
-  const jwt = isAuthenticated();
-
   const addMember = () => {
     setLoading(true);
     const body = {
-      email: email,
-      projectId: projectId,
+      email: props.email,
+      name: props.name,
+      password: props.password,
+      username: props.username,
+      verificationCode: code,
     };
-    addNewMember({ t: jwt.token }, body).then((response) => {
-      console.log(response);
+    create(body).then((response) => {
       if (response.success) {
         setLoading(false);
-        props.closeAddMember();
-        props.changeReloadSignal();
+        history.push('/signin');
       } else {
         setMessage(response.message);
         setOpenResponse(true);
@@ -43,31 +44,34 @@ const AddMember = (props) => {
       {openResponse && (
         <ResponseModal
           message={message}
-          setOpen={() => setOpenResponse(false)}
+          setOpen={() => {
+            setOpenResponse(false);
+            props.setOpen();
+          }}
         />
       )}
       <div className='addMember__form pop__up'>
         <div className='addMember__top'>
-          <div className='addMember__label'>User Mail</div>
-          <div className='addMember__closeIcon' onClick={props.closeAddMember}>
+          <div className='addMember__label'>Verification Code</div>
+          <div className='addMember__closeIcon' onClick={props.setOpen}>
             <CloseIcon />
           </div>
         </div>
         <input
           className='addMember__input'
-          value={email}
+          value={code}
           onChange={(e) => {
-            setEmail(e.target.value);
+            setCode(e.target.value);
           }}
-          placeholder='@gmail.com'
+          placeholder='8 digits'
         />
         <Button onClick={addMember} size='small'>
-          Add Member
+          Verify
         </Button>
       </div>
     </div>,
-    document.getElementById('addMember')
+    document.getElementById('verificationCode')
   );
 };
 
-export default AddMember;
+export default VerificationCode;

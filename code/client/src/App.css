@@ -2,26 +2,13 @@
   display: flex;
 }
 
-.ball {
-  width: 10vh;
-  height: 10vh;
-  background-color: #ff8c42;
-  border-radius: 50%;
-  animation: bounce 3s cubic-bezier(0.1, 0.25, 1, 0.25);
+::-webkit-scrollbar {
+  width: 0px;
 }
-
-@keyframes bounce {
-  60%,
-  80%,
-  to {
-    transform: translateY(400px);
-    animation-timing-function: ease-out;
-    background-color: black;
-  }
-  70% {
-    transform: translateY(300px);
-  }
-  90% {
-    transform: translateY(360px);
-  }
+::-webkit-scrollbar-track {
+  background: #101522;
+}
+::-webkit-scrollbar-thumb {
+  background: #101522;
+  border-radius: 2.5vh;
 }

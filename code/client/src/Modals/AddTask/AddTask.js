@@ -10,6 +10,9 @@ import ResponseModal from '../ResponseModal/ResponseModal';
 import { create, getSuggestions } from '../../API/task';
 import { useHistory } from 'react-router';
 import SuggestUserModal from '../SuggestionModal/SuggestUserModal';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { isAuthenticated } from '../../API/auth-helper';
 
 const AddTask = (props) => {
   const { projectId } = useParams();
@@ -21,8 +24,14 @@ const AddTask = (props) => {
   const [openResponse, setOpenResponse] = useState(false);
   const [openSuggestResponse, setOpenSuggestResponse] = useState(false);
   const [assignedTo, setAssignedTo] = useState('');
+  const [assignedEmail, setAssignedEmail] = useState('None');
   const [story, setStory] = useState('');
   const [points, setPoints] = useState(3);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [pop, setPop] = useState('pop__up');
+
+  const jwt = isAuthenticated();
+
   const history = useHistory();
 
   useEffect(() => {
@@ -41,10 +50,6 @@ const AddTask = (props) => {
     });
   }, []);
 
-  const selectMember = (event) => {
-    setAssignedTo(event.target.value);
-  };
-
   const submitHandler = () => {
     setLoading(true);
     const body = {
@@ -56,12 +61,15 @@ const AddTask = (props) => {
       projectId,
       status: 'Pending',
     };
-    create(body).then((response) => {
+    create({ t: jwt.token }, body).then((response) => {
       console.log(response);
       if (response.success) {
         setLoading(false);
         history.push(`/taskboard/${projectId}`);
-        props.closeAddTask();
+        setPop('pop__down');
+        setTimeout(() => {
+          props.closeAddTask();
+        }, 500);
       } else {
         setMessage(response.message);
         setOpenResponse(true);
@@ -106,10 +114,23 @@ const AddTask = (props) => {
           suggested={suggested}
           message={message}
           setOpen={() => setOpenSuggestResponse(false)}
+          selectEmail={(email) => {
+            setAssignedEmail(email);
+          }}
+          selectId={(id) => {
+            setAssignedTo(id);
+          }}
         />
       )}
-      <div className='addTask__container'>
-        <div className='addTask__closeButton' onClick={props.closeAddTask}>
+      <div className={`addTask__container ${pop}`}>
+        <div
+          className='addTask__closeButton'
+          onClick={() => {
+            setPop('pop__down');
+            setTimeout(() => {
+              props.closeAddTask();
+            }, 500);
+          }}>
           <CloseIcon />
         </div>
         <div className='addTask__storyContainer'>
@@ -126,16 +147,33 @@ const AddTask = (props) => {
         <div className='addTask__memberContainer'>
           <div className='addTask__member'>
             <div className='addTask__title'>Assign Member</div>
-            <select className='addTask__selector' onChange={selectMember}>
-              {toBeAssigned.map((member) => (
-                <option
-                  key={member._id}
-                  value={member._id}
-                  className='addTask__option'>
-                  {member.email}
-                </option>
-              ))}
-            </select>
+            <div
+              className='addTask__selector'
+              onClick={() => {
+                setShowDropDown(!showDropDown);
+              }}>
+              <div className='addTask__selectorText'>{assignedEmail}</div>
+              <div className='addTask__selectorIcon'>
+                {showDropDown ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+              </div>
+            </div>
+            {showDropDown && (
+              <div className='addTask__options'>
+                {toBeAssigned.map((member) => (
+                  <div
+                    className='addTask__option'
+                    key={member._id}
+                    value={member._id}
+                    onClick={() => {
+                      setAssignedTo(member._id);
+                      setAssignedEmail(member.email);
+                      setShowDropDown(!showDropDown);
+                    }}>
+                    {member.email}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div
             className='addTask__getSuggestions'
@@ -148,12 +186,19 @@ const AddTask = (props) => {
           className='addTask__storyPoint'
           type='number'
           value={points}
-          onChange={(event) => {
-            setPoints(event.target.value);
+          onChange={(e) => {
+            if (e.target.value > 5) setPoints(5);
+            else if (e.target.value < 1) setPoints(1);
+            else setPoints(e.target.value);
           }}
         />
         <div className='addTask__button'>
-          <Button onClick={submitHandler}>Add Story</Button>
+          <Button
+            onClick={() => {
+              submitHandler();
+            }}>
+            Add Story
+          </Button>
         </div>
       </div>
     </div>,

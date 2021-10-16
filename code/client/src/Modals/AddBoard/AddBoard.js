@@ -48,7 +48,7 @@ const AddBoard = (props) => {
           setOpen={() => setOpenResponse(false)}
         />
       )}
-      <div className='addboard__container'>
+      <div className='addboard__container pop__up'>
         <div className='addboard__header'>
           <div className='addboard__title'>Epic name</div>
           <div

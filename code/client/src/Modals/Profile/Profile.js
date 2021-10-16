@@ -28,6 +28,7 @@ const Profile = (props) => {
   const [focusChanged, setFocusChanged] = useState('');
   const [newSkill, setNewSkill] = useState('');
   const [skillSet, setSkillSet] = useState(user.user.skills);
+  const [slideOut, setSlideOut] = useState('');
 
   const filePickerRef = useRef();
 
@@ -138,8 +139,15 @@ const Profile = (props) => {
       {open && (
         <ResponseModal setOpen={() => setOpen(false)} message={message} />
       )}
-      <div className={`profile__container ${slide}`}>
-        <div className='profile__closeButton' onClick={props.closeProfile}>
+      <div className={`profile__container ${slide} ${slideOut}`}>
+        <div
+          className='profile__closeButton'
+          onClick={() => {
+            setSlideOut('slideOut');
+            setTimeout(function () {
+              props.closeProfile();
+            }, 300);
+          }}>
           <DoubleArrowIcon />
         </div>
         <div className='profile__imageSection'>

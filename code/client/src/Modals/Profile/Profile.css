@@ -42,6 +42,29 @@
   }
 }
 
+.slideOut {
+  animation: slide-out 0.3s forwards;
+  -webkit-animation: slide-out 0.3s forwards;
+}
+
+@-webkit-keyframes slide-out {
+  0% {
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .profile__closeButton {
   margin-top: 2vh;
   margin-left: 1vw;
@@ -124,7 +147,7 @@
   width: 80%;
   height: 5vh;
   border-radius: 0.7vw;
-  border: 3px dashed #8b8b8b;
+  border: 1px solid #8b8b8b;
   color: #8b8b8b;
   margin-bottom: 2vh;
   transition: all 0.3s ease-in-out;
@@ -150,11 +173,11 @@
 
 .whiteBorder {
   color: #f5f9e9;
-  border-bottom: 3px solid #cacaca;
-  border-top: 3px solid #1f2430;
-  border-right: 3px solid #1f2430;
-  border-left: 3px solid #1f2430;
-  border-radius: 0.5vh;
+  border-bottom: 1px solid #cacaca;
+  border-top: 1px solid #1f2430;
+  border-right: 1px solid #1f2430;
+  border-left: 1px solid #1f2430;
+  border-radius: 0.2vh;
   /*border-color: #bbbbbb;*/
 }
 

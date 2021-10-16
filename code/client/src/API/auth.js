@@ -26,4 +26,20 @@ const signout = async () => {
   }
 };
 
-export { signin, signout };
+const emailVerification = async (body) => {
+  try {
+    let response = await fetch('http://localhost:5000/emailVerification', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { signin, signout, emailVerification };

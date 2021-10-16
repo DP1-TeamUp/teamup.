@@ -12,6 +12,9 @@ import { updateTask } from '../../API/task';
 import ConsentModal from '../../Modals/ConsentModal/ConsentModal';
 import { deleteTask, getSuggestions } from '../../API/task';
 import SuggestUserModal from '../SuggestionModal/SuggestUserModal';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { isAuthenticated } from '../../API/auth-helper';
 
 const UpdateTask = (props) => {
   const { projectId } = useParams();
@@ -30,7 +33,7 @@ const UpdateTask = (props) => {
   const defaultSprint = [
     { _id: props.sprintId || 0, sprintNo: props.sprintNo || '--' },
   ];
-  const [sprints, setSprints] = useState([]);
+  const [sprints, setSprints] = useState(defaultSprint);
   const [sprint, setSprint] = useState('');
   const [openSuggestResponse, setOpenSuggestResponse] = useState(false);
   const [suggested, setSuggested] = useState([]);
@@ -38,9 +41,14 @@ const UpdateTask = (props) => {
   const [loadinga, setLoadinga] = useState(true);
   const [loadingb, setLoadingb] = useState(false);
   const [message, setMessage] = useState('');
-
   const [openResponse, setOpenResponse] = useState(false);
   const [openConsentModal, setOpenConsentModal] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const [showSprintDropDown, setShowSprintDropDown] = useState(false);
+  const [assignedEmail, setAssignedEmail] = useState('None');
+  const [assignedSprint, setAssignedSprint] = useState(sprints[0].sprintNo);
+
+  const jwt = isAuthenticated();
 
   useEffect(() => {
     setLoading(true);
@@ -50,6 +58,7 @@ const UpdateTask = (props) => {
         response.members.map((member) => {
           if (member._id === members[0]._id) {
             members[0].email = member.email;
+            setAssignedEmail(member.email);
           } else {
             members.push(member);
           }
@@ -66,7 +75,7 @@ const UpdateTask = (props) => {
 
   useEffect(() => {
     setLoadinga(true);
-    getSprints(projectId).then((response) => {
+    getSprints({ t: jwt.token }, projectId).then((response) => {
       if (response.success) {
         response.sprints.map((sprint) => {
           if (sprint._id !== defaultSprint[0]._id) defaultSprint.push(sprint);
@@ -81,14 +90,6 @@ const UpdateTask = (props) => {
     });
   }, []);
 
-  const selectMember = (event) => {
-    setAssignedTo(event.target.value);
-  };
-
-  const selectSprint = (event) => {
-    setSprint(event.target.value);
-  };
-
   const update = () => {
     setLoadingb(true);
     const body = {
@@ -99,7 +100,7 @@ const UpdateTask = (props) => {
       taskId: props._id,
     };
     console.log(body);
-    updateTask(body).then((response) => {
+    updateTask({ t: jwt.token }, body).then((response) => {
       console.log(response);
       if (response.success) {
         setLoadingb(false);
@@ -114,7 +115,7 @@ const UpdateTask = (props) => {
 
   const removeTaskClicked = () => {
     setLoading(true);
-    deleteTask(props._id).then((response) => {
+    deleteTask({ t: jwt.token }, props._id).then((response) => {
       if (response.success) {
         setLoading(false);
         setOpenConsentModal(false);
@@ -174,9 +175,15 @@ const UpdateTask = (props) => {
           suggested={suggested}
           message={message}
           setOpen={() => setOpenSuggestResponse(false)}
+          selectEmail={(email) => {
+            setAssignedEmail(email);
+          }}
+          selectId={(id) => {
+            setAssignedTo(id);
+          }}
         />
       )}
-      <div className='updateTask__container'>
+      <div className='updateTask__container pop__up'>
         <div className='addTask__closeButton' onClick={props.close}>
           <CloseIcon />
         </div>
@@ -195,16 +202,33 @@ const UpdateTask = (props) => {
         <div className='addTask__memberContainer'>
           <div className='addTask__member'>
             <div className='addTask__title'>Assign Member</div>
-            <select className='addTask__selector' onChange={selectMember}>
-              {toBeAssigned.map((member) => (
-                <option
-                  key={member._id}
-                  value={member._id}
-                  className='addTask__option'>
-                  {member.email}
-                </option>
-              ))}
-            </select>
+            <div
+              className='addTask__selector'
+              onClick={() => {
+                setShowDropDown(!showDropDown);
+              }}>
+              <div className='addTask__selectorText'>{assignedEmail}</div>
+              <div className='addTask__selectorIcon'>
+                {showDropDown ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+              </div>
+            </div>
+            {showDropDown && (
+              <div className='addTask__options'>
+                {toBeAssigned.map((member) => (
+                  <div
+                    className='addTask__option'
+                    key={member._id}
+                    value={member._id}
+                    onClick={() => {
+                      setAssignedTo(member._id);
+                      setAssignedEmail(member.email);
+                      setShowDropDown(!showDropDown);
+                    }}>
+                    {member.email}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div
             className='addTask__getSuggestions'
@@ -216,16 +240,39 @@ const UpdateTask = (props) => {
         <div className='updateTask__secondSection'>
           <div className='updateTask__SprintContainer'>
             <div className='updateTask__title'>Add Sprint</div>
-            <select className='addTask__selector' onChange={selectSprint}>
-              {sprints.map((indexSprint) => (
-                <option
-                  key={indexSprint._id}
-                  value={indexSprint._id}
-                  className='addTask__option'>
-                  Sprint {indexSprint.sprintNo}
-                </option>
-              ))}
-            </select>
+            <div
+              className='addTask__selector'
+              onClick={() => {
+                setShowSprintDropDown(!showSprintDropDown);
+              }}>
+              <div className='addTask__selectorText'>
+                Sprint {assignedSprint}
+              </div>
+              <div className='addTask__selectorIcon'>
+                {showSprintDropDown ? (
+                  <ArrowDropUpIcon />
+                ) : (
+                  <ArrowDropDownIcon />
+                )}
+              </div>
+            </div>
+            {showSprintDropDown && (
+              <div className='selectSprint__options'>
+                {sprints.map((indexSprint) => (
+                  <div
+                    key={indexSprint._id}
+                    value={indexSprint._id}
+                    className='addTask__option'
+                    onClick={() => {
+                      setAssignedSprint(indexSprint.sprintNo);
+                      setSprint(indexSprint._id);
+                      setShowSprintDropDown(!showSprintDropDown);
+                    }}>
+                    Sprint {indexSprint.sprintNo}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className='updateTask__StoryPoints'>
             <div className='updateTask__title'>Story Points</div>
@@ -234,16 +281,21 @@ const UpdateTask = (props) => {
               type='number'
               value={points}
               onChange={(e) => {
-                setPoints(e.target.value);
+                if (e.target.value > 5) setPoints(5);
+                else if (e.target.value < 1) setPoints(1);
+                else setPoints(e.target.value);
               }}
             />
           </div>
         </div>
 
         <div className='updateTask__buttonContainer'>
-          <Button onClick={update}>Update</Button>
+          <Button size='small' onClick={update}>
+            Update
+          </Button>
           <Button
             red='red'
+            size='small'
             onClick={() => {
               setOpenConsentModal(true);
             }}>

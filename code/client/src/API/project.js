@@ -69,7 +69,7 @@ const listAllMembers = async (projectId) => {
   }
 };
 
-const addNewMember = async (body) => {
+const addNewMember = async (credentials, body) => {
   try {
     let response = await fetch(
       `http://localhost:5000/api/projects/members/${body.projectId}/`,
@@ -78,6 +78,7 @@ const addNewMember = async (body) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + credentials.t,
         },
         body: JSON.stringify(body),
       }
@@ -88,7 +89,7 @@ const addNewMember = async (body) => {
   }
 };
 
-const removeMember = async (body) => {
+const removeMember = async (credentials, body) => {
   try {
     let response = await fetch(
       `http://localhost:5000/api/projects/members/${body.projectId}/`,
@@ -97,6 +98,7 @@ const removeMember = async (body) => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + credentials.t,
         },
         body: JSON.stringify(body),
       }
@@ -126,6 +128,25 @@ const listAllSprints = async (body) => {
   }
 };
 
+const belongsToProject = async (credentials, projectId) => {
+  try {
+    let response = await fetch(
+      `http://localhost:5000/auth/projects/${projectId}/`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + credentials.t,
+        },
+      }
+    );
+    return response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
   create,
   findProjectByUserId,
@@ -134,4 +155,5 @@ export {
   removeMember,
   listAllSprints,
   changeMemberDesignation,
+  belongsToProject,
 };

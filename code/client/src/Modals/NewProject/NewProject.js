@@ -41,7 +41,7 @@ const NewProject = (props) => {
 
   return ReactDOM.createPortal(
     <div className='newproject'>
-      <div className='newproject__container'>
+      <div className='newproject__container pop__up'>
         <div className='newproject__groupButtonless'>
           <div className='newproject__header'>
             <div className='newproject__title'>New Project</div>

@@ -1,7 +1,7 @@
 export const initialState = {
   project: {},
   user: {},
-  boards: [],
+  allUsers: [],
 };
 
 const reducer = (state, action) => {
@@ -16,10 +16,10 @@ const reducer = (state, action) => {
         ...state,
         project: action.project,
       };
-    case 'RETRIEVED_BOARDS':
+    case 'UPDATE_ALL_USERS':
       return {
         ...state,
-        boards: action.boards,
+        allUsers: action.allUsers,
       };
     default:
       return state;

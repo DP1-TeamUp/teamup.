@@ -1,0 +1,25 @@
+.singleNotice {
+  color: #f5f9e9;
+  margin: 2vh 0.5vw;
+  padding: 1.2vh 0.8vw;
+  background-color: #1f2430;
+  border-radius: 1vw;
+}
+
+.singleNotice__projectName {
+  font-size: 1.4vw;
+  color: #5bc0eb;
+  font-family: 'Montserrat';
+  margin-bottom: 1.2vh;
+}
+
+.singleNotice__subject {
+  font-size: 1.1vw;
+  font-family: 'Montserrat';
+  margin-bottom: 1.2vh;
+}
+
+.singleNotice__content {
+  font-size: 1vw;
+  font-family: 'Open Sans';
+}
