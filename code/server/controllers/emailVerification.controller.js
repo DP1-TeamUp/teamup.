@@ -41,7 +41,7 @@ const createEmailVerification = async (req, res) => {
   const mailOptions = {
     from: 'teamupp89@gmail.com',
     to: user.email,
-    subject: 'Forgot password request',
+    subject: 'Account Verification',
     text: message,
   };
   // sending mail
