@@ -386,12 +386,15 @@ const updateTaskFromEpic = async (req, res) => {
 
   if (req.body.assignedTo == task.assignedTo) {
     user1.notifications.push(notification);
+    await user1.save();
   } else {
     if (user1) {
       user1.notifications.push(notification1);
+      await user1.save();
     }
     if (user2) {
       user2.notifications.push(notification2);
+      await user2.save();
     }
   }
 
@@ -428,12 +431,14 @@ const updateTaskFromEpic = async (req, res) => {
     task.assignedTo = req.body.assignedTo;
     task.story = req.body.story;
     task.points = req.body.points;
-    if (user1) {
-      await user1.save({ session: sess });
-    }
-    if (user2) {
-      await user2.save({ session: sess });
-    }
+    /*if (user1._id) {
+      await user1.save();
+    }*/
+    /*if (user1._id !== user2._id) {
+      if (user2._id) {
+        await user2.save();
+      }
+    }*/
     await task.save({ session: sess });
     await sess.commitTransaction();
 
