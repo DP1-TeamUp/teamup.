@@ -85,8 +85,7 @@ const deleteBoard = async (req, res) => {
   if (completedTaskFound === 1) {
     return res.status(504).json({
       success: false,
-      message:
-        'Unable to Delete Epic due to completed tasks are found in the Epic.',
+      message: 'Unable to delete Epic with one or more completed tasks in it.',
     });
   }
 

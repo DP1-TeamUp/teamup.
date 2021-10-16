@@ -1,8 +1,41 @@
 const User = require('../models/user.model');
 const transporter = require('../helper/nodemailer');
 const crypto = require('crypto');
+const EmailVerification = require('../models/EmailVerification');
 
 const create = async (req, res, next) => {
+  let emailToBeVerified;
+
+  try {
+    emailToBeVerified = await EmailVerification.findOne({
+      email: req.body.email,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: 'Something went wrong' });
+  }
+
+  req.body.email = emailToBeVerified.email;
+  req.body.name = emailToBeVerified.name;
+  req.body.password = emailToBeVerified.password;
+  req.body.username = emailToBeVerified.username;
+
+  if (req.body.verificationCode !== emailToBeVerified.verificationCode) {
+    try {
+      await emailToBeVerified.remove();
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Try using the given verification code',
+      });
+    }
+    return res
+      .status(400)
+      .json({ success: false, message: 'Verification Code did not matched' });
+  }
+
   const user = new User(req.body);
   if (
     !req.body.password ||

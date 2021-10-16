@@ -298,6 +298,20 @@ const removeMemberFromProject = async (req, res) => {
     tasks.forEach(async (task) => {
       task.assignedTo = undefined;
       await task.save({ session: sess });
+      if (task.sprintId) {
+        let sprint = await Sprint.findById(task.sprintId._id);
+        if (sprint) {
+          project.admin.notifications.push({
+            project: project.name,
+            subject:
+              'Your action created an unassigned story on sprint ' +
+              sprint.sprintNo,
+            content: task.story,
+          });
+
+          project.admin.save();
+        }
+      }
     });
     user.notifications.push(notification);
     user.projects.pull(project);
